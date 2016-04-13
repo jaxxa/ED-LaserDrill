@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>ED-Laser Drill</name>
+	<author>Jaxxa</author>
+	<url>https://ludeon.com/forums/index.php?topic=15606.0</url>
+	<description>
+	Requires: ED-Core
+Adds a Laser Drill that allows the creation of new steam vents, and a Laser laserFill that allows you to remove unwanted steam vents.
+	</description>
+</ModMetaData>
