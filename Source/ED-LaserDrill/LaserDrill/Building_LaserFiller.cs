@@ -14,7 +14,6 @@ namespace Enhanced_Development.Power.LaserDrill
         private static Texture2D UI_ACTIVATE_GATE;
         private int drillWork = 500;
         private CompPowerTrader powerComp;
-        Thing targetSteamGeyser = null;
         bool active = false;
 
         public override void SpawnSetup()
@@ -86,19 +85,15 @@ namespace Enhanced_Development.Power.LaserDrill
 
         public void ActivateDrill()
         {
-            this.targetSteamGeyser = this.FindClosestGuyser();
-            this.active = true;
+            if (this.FindClosestGuyser() != null)
+            {
+                this.active = true;
+            }
+            else
+            {
+
+            }
         }
-
-        //public void RemoveGuyser()
-        //{
-        //    List<Thing> steamGeysers = Find.ListerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
-
-        //    foreach (Thing currentGuyser in steamGeysers)
-        //    {
-        //        currentGuyser.DeSpawn();
-        //    }
-        //}
 
         public override void TickRare()
         {
@@ -116,23 +111,10 @@ namespace Enhanced_Development.Power.LaserDrill
 
                 if (this.drillWork <= 0)
                 {
-                    //Thing SteamGeyser = Find.ThingGrid.ThingAt(this.Position, ThingDef.Named("SteamGeyser"));
-                    //SteamGeyser.Destroy(DestroyMode.Vanish);
-                    //SteamGeyser.DeSpawn();
-                    if (this.targetSteamGeyser != null)
-                    {
-                        this.targetSteamGeyser.DeSpawn();
-                        this.Destroy(DestroyMode.Vanish);
-                        //GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.Position);
-                    }
-                    else
-                    {
-                        this.targetSteamGeyser = this.FindClosestGuyser();
 
-                        if (this.targetSteamGeyser != null)
-                        {
-                            this.targetSteamGeyser.DeSpawn();
-                        }
+                    if (this.FindClosestGuyser() != null)
+                    {
+                        this.FindClosestGuyser().DeSpawn();
                         this.Destroy(DestroyMode.Vanish);
                     }
                 }
