@@ -46,7 +46,7 @@
 		<comps>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
-				<basePowerConsumption>-1200</basePowerConsumption>
+				<basePowerConsumption>1200</basePowerConsumption>
 				<transmitsPower>true</transmitsPower>
 			</li>
       <li Class="CompProperties_Flickable"/>
@@ -101,7 +101,7 @@
 		<comps>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
-				<basePowerConsumption>-1200</basePowerConsumption>
+				<basePowerConsumption>1200</basePowerConsumption>
 				<transmitsPower>true</transmitsPower>
 			</li>
       <li Class="CompProperties_Flickable"/>
