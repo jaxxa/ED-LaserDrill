@@ -23,13 +23,13 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserDrill</defName>
 		<label>Laser Drill</label>
-		<thingClass>Enhanced_Development.Power.LaserDrill.Building_LaserDrill</thingClass>
+		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserDrill</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserDrill</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<drawSize>(6,6)</drawSize>
 		</graphicData>
-		<altitudeLayer>BuildingTall</altitudeLayer>
+		<altitudeLayer>Building</altitudeLayer>
 		<passability>Impassable</passability>
 		<castEdgeShadows>true</castEdgeShadows>
 		<fillPercent>1</fillPercent>
@@ -71,13 +71,13 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserFiller</defName>
 		<label>Laser Filler</label>
-		<thingClass>Enhanced_Development.Power.LaserDrill.Building_LaserFiller</thingClass>
+		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserFiller</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserFiller</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<drawSize>(3,3)</drawSize>
 		</graphicData>
-		<altitudeLayer>BuildingTall</altitudeLayer>
+		<altitudeLayer>Building</altitudeLayer>
 		<passability>Impassable</passability>
 		<castEdgeShadows>true</castEdgeShadows>
 		<fillPercent>1</fillPercent>

@@ -6,9 +6,9 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 
-namespace Enhanced_Development.Power.LaserDrill
+namespace EnhancedDevelopment.LaserDrill
 {
-
+    [StaticConstructorOnStartup]
     public class Building_LaserFiller : Building
     {
         private static Texture2D UI_ACTIVATE_GATE;

@@ -5,9 +5,9 @@ using System.Text;
 using RimWorld;
 using Verse;
 
-namespace Enhanced_Development.Power.LaserDrill
+namespace EnhancedDevelopment.LaserDrill
 {
-
+    [StaticConstructorOnStartup]
     public class Building_LaserDrill : Building
     {
         private int drillWork = 500;
