@@ -16,12 +16,15 @@ namespace EnhancedDevelopment.LaserDrill
         private CompPowerTrader powerComp;
         bool active = false;
 
+        static Building_LaserFiller()
+        {
+            UI_ACTIVATE_GATE = ContentFinder<Texture2D>.Get("UI/nuke", true);
+        }
+
         public override void SpawnSetup()
         {
             base.SpawnSetup();
             this.powerComp = this.GetComp<CompPowerTrader>();
-
-            UI_ACTIVATE_GATE = ContentFinder<Texture2D>.Get("UI/nuke", true);
         }
 
         public override void ExposeData()

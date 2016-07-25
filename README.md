@@ -13,3 +13,6 @@ Aditional details can be fount in About.xml
 
 02.00.00
 *Alpha 14 Update
+
+02.00.01
+*Fix for potentially not loading Graphical Resources on loading a saved game.
