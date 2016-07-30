@@ -1,5 +1,0 @@
-01.00.00
-Initial Release
-
-01.00.01
-Fix for Laser Drills / Filler Generating Power
