@@ -16,3 +16,6 @@ Aditional details can be fount in About.xml
 
 02.00.01
 *Fix for potentially not loading Graphical Resources on loading a saved game.
+
+03.00.00
+*Update to Alpha 15
