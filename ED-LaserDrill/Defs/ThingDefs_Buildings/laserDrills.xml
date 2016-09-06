@@ -54,8 +54,8 @@
 		</comps>
 		<size>(6,6)</size>
 		<costList>
-			<Steel>500</Steel>
-			<Uranium>100</Uranium>
+			<Component>25</Component>
+			<Silver>100</Silver>
 		</costList>
 		<hasInteractionCell>False</hasInteractionCell>
 		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
@@ -92,7 +92,7 @@
 		<description>Removes a nearby SteamGeyser by filling it with rock and melting that rock with a laser to create a buildable surface</description>
 		<size>(3,3)</size>
 		<costList>
-			<Steel>100</Steel>
+			<Component>5</Component>
 		</costList>
 		<costStuffCount>500</costStuffCount>
 		<stuffCategories>
