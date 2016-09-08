@@ -104,12 +104,12 @@ namespace EnhancedDevelopment.LaserDrill
             {
                 if (this.powerComp.PowerOn)
                 {
-                    Log.Message("Reducing count");
+                    //Log.Message("Reducing count");
                     this.drillWork = this.drillWork - 1;
                 }
                 else
                 {
-                    Log.Message("No Power for drill.");
+                    //Log.Message("No Power for drill.");
                 }
 
                 if (this.drillWork <= 0)
