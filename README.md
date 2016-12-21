@@ -20,3 +20,6 @@ Aditional details can be fount in About.xml
 03.00.00
 *Update to Alpha 15
 *Rebalancing Costs
+
+04.00.00
+*Update to Alpha 16

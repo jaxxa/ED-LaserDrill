@@ -14,9 +14,10 @@ namespace EnhancedDevelopment.LaserDrill
         private CompPowerTrader _PowerComp;
         private CompFlickable _FlickComp;
 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            
+            base.SpawnSetup(map);
             this._PowerComp = this.GetComp<CompPowerTrader>();
             this._FlickComp = this.GetComp<CompFlickable>();
         }
@@ -44,8 +45,8 @@ namespace EnhancedDevelopment.LaserDrill
             {
                 Messages.Message("SteamGeyser Created.", MessageSound.Benefit);
 
+                GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.Position, this.Map);
                 this.Destroy(DestroyMode.Vanish);
-                GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.Position);
             }
             base.Tick();
         }
@@ -53,7 +54,7 @@ namespace EnhancedDevelopment.LaserDrill
         public void disableOthers()
         {
             //<Pawn>(t => t.Position.WithinHorizontalDistanceOf(this.Position, this.MAX_DISTANCE));               
-            IEnumerable<Building> LaserBuildings = Find.ListerBuildings.allBuildingsColonist.Where<Building>(t => t.def.defName == "LaserDrill");
+            IEnumerable<Building> LaserBuildings = this.Map.listerBuildings.allBuildingsColonist.Where<Building>(t => t.def.defName == "LaserDrill");
 
             if (LaserBuildings != null)
             {

@@ -21,9 +21,9 @@ namespace EnhancedDevelopment.LaserDrill
             UI_ACTIVATE_GATE = ContentFinder<Texture2D>.Get("UI/nuke", true);
         }
 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.powerComp = this.GetComp<CompPowerTrader>();
         }
 
@@ -60,7 +60,7 @@ namespace EnhancedDevelopment.LaserDrill
 
         public Thing FindClosestGuyser()
         {
-            List<Thing> steamGeysers = Find.ListerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
+            List<Thing> steamGeysers = this.Map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
             Thing currentLowestGuyser = null;
 
             double lowestDistance = double.MaxValue;

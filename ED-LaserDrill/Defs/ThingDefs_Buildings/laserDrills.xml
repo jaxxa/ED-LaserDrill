@@ -22,7 +22,7 @@
 
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserDrill</defName>
-		<label>Laser Drill</label>
+		<label>Laser Steam Geyser Drill</label>
 		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserDrill</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserDrill</texPath>
@@ -63,14 +63,14 @@
 		<designationCategory>Power</designationCategory>
 		<staticSunShadowHeight>0.75</staticSunShadowHeight>
 		<researchPrerequisites>
-			<li>Research_LaserDrill</li>
+			<li>Research_LaserSteamGeyser_Drill</li>
 		</researchPrerequisites>
 	</ThingDef>
 
 
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserFiller</defName>
-		<label>Laser Filler</label>
+		<label>Laser Steam Geyser Filler</label>
 		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserFiller</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserFiller</texPath>
@@ -116,7 +116,7 @@
 			<ignoreNeedsPower>true</ignoreNeedsPower>
 		</building>
 		<researchPrerequisites>
-			<li>Research_LaserFiller</li>
+			<li>Research_LaserSteamGeyser_Filler</li>
 		</researchPrerequisites>
 	</ThingDef>
 
