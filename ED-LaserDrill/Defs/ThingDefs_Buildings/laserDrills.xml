@@ -35,7 +35,7 @@
 		<fillPercent>1</fillPercent>
 		<tickerType>Rare</tickerType>
 		<statBases>
-			<WorkToMake>1800</WorkToMake>
+			<WorkToBuild>1800</WorkToBuild>
 			<MaxHitPoints>350</MaxHitPoints>
 			<Flammability>1.0</Flammability>
 		</statBases>
@@ -84,7 +84,7 @@
 		<specialDisplayRadius>5</specialDisplayRadius>
 		<statBases>
 			<MaxHitPoints>500</MaxHitPoints>
-			<WorkToMake>6000</WorkToMake>
+			<WorkToBuild>6000</WorkToBuild>
 			<Flammability>1.0</Flammability>
 			<Beauty>-40</Beauty>
 		</statBases>
