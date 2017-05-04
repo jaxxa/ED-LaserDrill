@@ -90,43 +90,38 @@ namespace EnhancedDevelopment.LaserDrill
 
         public override string GetInspectString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            string text;
+            StringBuilder _StringBuilder = new StringBuilder();
 
             if (_PowerComp != null)
             {
                 if (this._PowerComp.PowerOn)
                 {
-                    text = "Drill Status: Online";
+                    _StringBuilder.AppendLine("Drill Status: Online");
 
                 }
                 else
                 {
-                    text = "Drill Status: Low Power";
+                    _StringBuilder.AppendLine("Drill Status: Low Power");
                 }
             }
             else
             {
-                text = "Drill Status: Low Power";
+                _StringBuilder.AppendLine("Drill Status: Low Power");
             }
 
-            stringBuilder.AppendLine(text);
-
-            text = "Drill Work Remaining: " + this.drillWork;
-            stringBuilder.AppendLine(text);
+            _StringBuilder.Append("Drill Work Remaining: " + this.drillWork);
 
             if (_PowerComp != null)
             {
-                text = _PowerComp.CompInspectStringExtra();
-                if (!text.NullOrEmpty())
+                string _Text = _PowerComp.CompInspectStringExtra();
+                if (!_Text.NullOrEmpty())
                 {
-                    stringBuilder.AppendLine(text);
+                    _StringBuilder.AppendLine("");
+                    _StringBuilder.Append(_Text);
                 }
             }
-
-
-            return stringBuilder.ToString();
+            
+            return _StringBuilder.ToString();
         }
     }
 }
