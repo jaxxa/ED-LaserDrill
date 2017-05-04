@@ -14,10 +14,10 @@ namespace EnhancedDevelopment.LaserDrill
         private CompPowerTrader _PowerComp;
         private CompFlickable _FlickComp;
 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, Boolean respawnAfterLoading)
         {
             
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawnAfterLoading);
             this._PowerComp = this.GetComp<CompPowerTrader>();
             this._FlickComp = this.GetComp<CompFlickable>();
         }
@@ -25,7 +25,7 @@ namespace EnhancedDevelopment.LaserDrill
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.drillWork, "drillWork", 0, false);
+            Scribe_Values.Look<int>(ref this.drillWork, "drillWork", 0, false);
         }
 
         public override void TickRare()

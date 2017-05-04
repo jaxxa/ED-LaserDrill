@@ -21,17 +21,17 @@ namespace EnhancedDevelopment.LaserDrill
             UI_ACTIVATE_GATE = ContentFinder<Texture2D>.Get("UI/nuke", true);
         }
 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, Boolean respawnAfterLoading)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawnAfterLoading);
             this.powerComp = this.GetComp<CompPowerTrader>();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.drillWork, "drillWork", 0, false);
-            Scribe_Values.LookValue<bool>(ref this.active, "active", false, false);
+            Scribe_Values.Look<int>(ref this.drillWork, "drillWork", 0, false);
+            Scribe_Values.Look<bool>(ref this.active, "active", false, false);
             //Scribe_Values.LookValue<Thing>(ref this.targetSteamGeyser, "targetSteamGeyser", null, false);
         }
 
