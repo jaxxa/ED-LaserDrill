@@ -27,5 +27,5 @@ Aditional details can be fount in About.xml
 04.00.01
 *Converting WorkToMake to WorkToBuild
 
-0.17.0.0
+0.17.0
 *Update to Alpha 17
