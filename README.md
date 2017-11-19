@@ -29,3 +29,6 @@ Aditional details can be fount in About.xml
 
 0.17.0
 *Update to Alpha 17
+
+0.18.0.0
+*Update to Beta 18

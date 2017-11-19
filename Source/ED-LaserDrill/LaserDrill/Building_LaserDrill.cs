@@ -43,7 +43,7 @@ namespace EnhancedDevelopment.LaserDrill
 
             if (this.drillWork <= 0)
             {
-                Messages.Message("SteamGeyser Created.", MessageSound.Benefit);
+                Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
 
                 GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.Position, this.Map);
                 this.Destroy(DestroyMode.Vanish);
@@ -67,7 +67,7 @@ namespace EnhancedDevelopment.LaserDrill
                         //if (currentBuilding._PowerComp.DesirePowerOn)
                         if (currentBuilding._FlickComp.SwitchIsOn)
                         {
-                            Messages.Message("Only One Laser Drill Can be active at a Time.", MessageSound.Negative);
+                            Messages.Message("Only One Laser Drill Can be active at a Time.", MessageTypeDefOf.RejectInput);
                             //currentBuilding.powerComp.DesirePowerOn = false;
 
                             // currentBuilding._PowerComp.PowerOn = false;

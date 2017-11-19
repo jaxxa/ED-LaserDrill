@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ResearchProjectDefs>
+<Defs>
 
 	<ResearchProjectDef>
 		<defName>Research_LaserSteamGeyser_Drill</defName>
@@ -9,6 +9,7 @@
 		<techLevel>Industrial</techLevel>
 		<prerequisites>
 			<li>DeepDrilling</li>
+			<li>GeothermalPower</li>
 		</prerequisites>
 		<researchViewX>10</researchViewX>
 		<researchViewY>0</researchViewY>
@@ -28,4 +29,4 @@
 		<researchViewY>0</researchViewY>
 	</ResearchProjectDef>
 
-</ResearchProjectDefs>
+</Defs>
