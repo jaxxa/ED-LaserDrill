@@ -12,7 +12,7 @@ namespace EnhancedDevelopment.LaserDrill
     public class Building_LaserFiller : Building
     {
         private static Texture2D UI_ACTIVATE_GATE;
-        private int drillWork = 500;
+        private int drillWork = Mod_LaserDrill.Settings.RequiredFillWork;
         private CompPowerTrader powerComp;
         bool active = false;
 
