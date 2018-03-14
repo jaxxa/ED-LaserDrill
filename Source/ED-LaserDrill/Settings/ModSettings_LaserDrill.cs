@@ -68,12 +68,9 @@ namespace EnhancedDevelopment.LaserDrill
             _listing_Standard_RequiredFillWork.NewColumn();
             _listing_Standard_RequiredFillWork.IntSetter(ref RequiredFillWork, 500, "Default");
             _listing_Standard_RequiredFillWork.End();
-
-
-
+            
             listing_Standard.GapLine(12f);
-
-
+            
             listing_Standard.Label("Allow Simultaneous Drilling:");
             listing_Standard.Gap(12f);
             listing_Standard.CheckboxLabeled("Allow Simultaneous Drilling", ref AllowSimultaneousDrilling, "True if you want to allow Multiple Drills at once.");
