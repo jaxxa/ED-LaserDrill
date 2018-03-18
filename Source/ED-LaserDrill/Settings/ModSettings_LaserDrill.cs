@@ -14,23 +14,17 @@ namespace EnhancedDevelopment.LaserDrill
         public int RequiredDrillWork = 500;
         public int RequiredFillWork = 500;
         public bool AllowSimultaneousDrilling = false;
-
+        public int DrillCharges = 1;
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            //Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
-            //Scribe_Values.Look<string>(ref LetterNamesToSuppress, "LetterNamesToSuppress", String.Empty, true);
+            Scribe_Values.Look<int>(ref RequiredDrillWork, "RequiredDrillWork", 500);
+            Scribe_Values.Look<int>(ref RequiredFillWork, "RequiredFillWork", 500);
+            Scribe_Values.Look<bool>(ref AllowSimultaneousDrilling, "AllowSimultaneousDrilling", false);
+            Scribe_Values.Look<int>(ref DrillCharges, "DrillCharges", 1);
 
-            //Scribe_Values.Look<bool>(ref Plant24HEnabled, "Plant24HEnabled", false, true);
-            //Scribe_Values.Look<bool>(ref PlantLights24HEnabled, "PlantLights24HEnabled", Plant24HEnabled, true); //If Not Set Default to Plant24HEnabled for backwards compatibility.
-
-            //Scribe_Values.Look<float>(ref BlightScale, "BlightScale", 1, true);
-            Scribe_Values.Look<int>(ref RequiredDrillWork, "RequiredDrillWork", 500, true);
-            Scribe_Values.Look<int>(ref RequiredFillWork, "RequiredFillWork", 500, true);
-            Scribe_Values.Look<bool>(ref AllowSimultaneousDrilling, "AllowSimultaneousDrilling", false, true);
-            
         }
 
 
@@ -75,6 +69,22 @@ namespace EnhancedDevelopment.LaserDrill
             listing_Standard.Gap(12f);
             listing_Standard.CheckboxLabeled("Allow Simultaneous Drilling", ref AllowSimultaneousDrilling, "True if you want to allow Multiple Drills at once.");
             listing_Standard.GapLine(12f);
+
+
+            listing_Standard.Label("Drilling Charges: " + DrillCharges.ToString());
+            listing_Standard.Gap();
+            Listing_Standard _listing_Standard_DrillCharges = new Listing_Standard();
+            _listing_Standard_DrillCharges.Begin(listing_Standard.GetRect(30f));
+            _listing_Standard_DrillCharges.ColumnWidth = 70;
+            _listing_Standard_DrillCharges.IntAdjuster(ref DrillCharges, 1, 1);
+            _listing_Standard_DrillCharges.NewColumn();
+            _listing_Standard_DrillCharges.IntAdjuster(ref DrillCharges,5, 1);
+            _listing_Standard_DrillCharges.NewColumn();
+            _listing_Standard_DrillCharges.IntSetter(ref DrillCharges, 1, "Default");
+            _listing_Standard_DrillCharges.End();
+
+            listing_Standard.GapLine(12f);
+
 
 
 

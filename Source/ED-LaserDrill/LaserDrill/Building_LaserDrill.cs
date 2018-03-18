@@ -10,7 +10,8 @@ namespace EnhancedDevelopment.LaserDrill
     [StaticConstructorOnStartup]
     public class Building_LaserDrill : Building
     {
-        private int drillWork = Mod_LaserDrill.Settings.RequiredDrillWork;
+        private int DrillIterationNumber = 1;
+        private int DrillWork;
         private CompPowerTrader _PowerComp;
         private CompFlickable _FlickComp;
 
@@ -20,12 +21,17 @@ namespace EnhancedDevelopment.LaserDrill
             base.SpawnSetup(map, respawnAfterLoading);
             this._PowerComp = this.GetComp<CompPowerTrader>();
             this._FlickComp = this.GetComp<CompFlickable>();
+
+            this.CalculateWorkStart();
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<int>(ref this.drillWork, "drillWork", 0, false);
+            Scribe_Values.Look<int>(ref this.DrillWork, "drillWork", 0);
+            Scribe_Values.Look<int>(ref this.DrillIterationNumber, "DrillIterationNumber", 0);
+
+
         }
 
         public override void TickRare()
@@ -34,19 +40,39 @@ namespace EnhancedDevelopment.LaserDrill
             {
                 //Log.Message("Reducing count");
                 this.disableOthers();
-                this.drillWork = this.drillWork - 1;
+                this.DrillWork = this.DrillWork - 1;
             }
             else
             {
                 //Log.Message("No Power for drill.");
             }
 
-            if (this.drillWork <= 0)
+            if (this.DrillWork <= 0)
             {
                 Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
 
                 GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.Position, this.Map);
-                this.Destroy(DestroyMode.Vanish);
+
+                if (this.DrillIterationNumber >= Mod_LaserDrill.Settings.DrillCharges)
+                {
+                    //Destroy
+
+                    this.Destroy(DestroyMode.Vanish);
+                }
+                else
+                {
+                    //Respawn
+                    IntVec3 _position = this.Position;
+                    Map _Map = this.Map;
+                    
+                    this.DrillIterationNumber += 1;
+                    this.CalculateWorkStart();
+
+                    MinifiedThing _MiniThing = this.MakeMinified();
+                    GenPlace.TryPlaceThing(_MiniThing, _position, _Map, ThingPlaceMode.Near, null);
+                }
+
+                               
             }
             base.Tick();
         }
@@ -114,7 +140,7 @@ namespace EnhancedDevelopment.LaserDrill
                 _StringBuilder.AppendLine("Drill Status: Low Power");
             }
 
-            _StringBuilder.Append("Drill Work Remaining: " + this.drillWork);
+            _StringBuilder.Append("Drill Work Remaining: " + this.DrillWork);
 
             if (_PowerComp != null)
             {
@@ -126,7 +152,22 @@ namespace EnhancedDevelopment.LaserDrill
                 }
             }
             
+            if (Mod_LaserDrill.Settings.DrillCharges > 1)
+            {
+                _StringBuilder.AppendLine("");
+                _StringBuilder.Append("Charges: " + this.DrillIterationNumber + " / " + Mod_LaserDrill.Settings.DrillCharges);
+            }
+            
             return _StringBuilder.ToString();
         }
-    }
+
+        private void CalculateWorkStart()
+        {
+            //this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * this.DrillIterationNumber * this.DrillIterationNumber;
+            //Log.Message("Pow:" + Mod_LaserDrill.Settings.RequiredDrillWork.ToString() + " - " + this.DrillIterationNumber);
+            //this.DrillWork = (int)Math.Pow(Mod_LaserDrill.Settings.RequiredDrillWork, this.DrillIterationNumber);
+            this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * (int)Math.Pow(2, this.DrillIterationNumber - 1);
+        }
+
+    } // End Class
 }

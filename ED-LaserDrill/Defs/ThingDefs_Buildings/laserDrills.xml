@@ -65,6 +65,7 @@
 		<researchPrerequisites>
 			<li>Research_LaserSteamGeyser_Drill</li>
 		</researchPrerequisites>
+		<minifiedDef>MinifiedFurniture</minifiedDef>
 	</ThingDef>
 
 
@@ -117,6 +118,7 @@
 		<researchPrerequisites>
 			<li>Research_LaserSteamGeyser_Filler</li>
 		</researchPrerequisites>
+		<minifiedDef>MinifiedFurniture</minifiedDef>
 	</ThingDef>
 
 
