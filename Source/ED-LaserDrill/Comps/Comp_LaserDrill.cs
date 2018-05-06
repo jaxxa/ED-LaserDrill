@@ -135,11 +135,16 @@ namespace EnhancedDevelopment.LaserDrill.Comps
 
         private void CalculateWorkStart()
         {
-            this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * (int)Math.Pow(2, this.DrillIterationNumber - 1);
-
+            if (this.Properties.FillMode)
+            {
+                this.DrillWork = Mod_LaserDrill.Settings.RequiredFillWork * (int)Math.Pow(2, this.DrillIterationNumber - 1);
+            }
+            else
+            {
+                this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * (int)Math.Pow(2, this.DrillIterationNumber - 1);
+            }
         }
-
-
+        
         public Thing FindClosestGuyser()
         {
             List<Thing> steamGeysers = this.parent.Map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
