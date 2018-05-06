@@ -100,44 +100,37 @@ namespace EnhancedDevelopment.LaserDrill.Comps
             // return base.CompInspectStringExtra();
 
             StringBuilder _StringBuilder = new StringBuilder();
-
-            if (_PowerComp != null)
+            
+            if (this.parent.Map != null && this.parent.Map.GetComponent<MapComp_LaserDrill>() != null)
             {
-                if (this._PowerComp.PowerOn)
+                if (!this.parent.Map.GetComponent<MapComp_LaserDrill>().IsActive(this.parent))
                 {
-                    _StringBuilder.AppendLine("Drill Status: Online");
-
+                    _StringBuilder.AppendLine("Drill Status: Offline, Waiting for another drill to finish.");
                 }
                 else
                 {
-                    _StringBuilder.AppendLine("Drill Status: Low Power");
-                }
-            }
-            else
-            {
-                _StringBuilder.AppendLine("Drill Status: Low Power");
-            }
-
-            _StringBuilder.Append("Drill Work Remaining: " + this.DrillWork);
-
-            if (_PowerComp != null)
-            {
-                string _Text = _PowerComp.CompInspectStringExtra();
-                if (!_Text.NullOrEmpty())
-                {
-                    _StringBuilder.AppendLine("");
-                    _StringBuilder.Append(_Text);
+                    if (_PowerComp != null)
+                    {
+                        if (this._PowerComp.PowerOn)
+                        {
+                            _StringBuilder.AppendLine("Drill Status: Online");
+                        }
+                        else
+                        {
+                            _StringBuilder.AppendLine("Drill Status: Low Power");
+                        }
+                    }
+                    _StringBuilder.Append("Drill Work Remaining: " + this.DrillWork);
                 }
             }
 
             if (Mod_LaserDrill.Settings.DrillCharges > 1)
             {
                 _StringBuilder.AppendLine("");
-                _StringBuilder.Append("Charges: " + this.DrillIterationNumber + " / " + Mod_LaserDrill.Settings.DrillCharges);
+                _StringBuilder.Append("Charge: " + this.DrillIterationNumber + " / " + Mod_LaserDrill.Settings.DrillCharges);
             }
 
             return _StringBuilder.ToString();
-
         }
 
         private void CalculateWorkStart()
