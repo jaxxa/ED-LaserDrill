@@ -23,7 +23,6 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserDrill</defName>
 		<label>Laser Steam Geyser Drill</label>
-		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserDrill</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserDrill</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -44,13 +43,15 @@
 			<wantsHopperAdjacent>false</wantsHopperAdjacent>
 		</building>
 		<comps>
+			<li Class="EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill">
+			</li>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
 				<basePowerConsumption>1200</basePowerConsumption>
 				<transmitsPower>true</transmitsPower>
 			</li>
-      <li Class="CompProperties_Flickable"/>
-      <li Class="CompProperties_Breakdownable"/>
+			<li Class="CompProperties_Flickable"/>
+			<li Class="CompProperties_Breakdownable"/>
 		</comps>
 		<size>(6,6)</size>
 		<costList>
@@ -105,8 +106,8 @@
 				<basePowerConsumption>1200</basePowerConsumption>
 				<transmitsPower>true</transmitsPower>
 			</li>
-      <li Class="CompProperties_Flickable"/>
-      <li Class="CompProperties_Breakdownable"/>
+			<li Class="CompProperties_Flickable"/>
+			<li Class="CompProperties_Breakdownable"/>
 		</comps>
 		<rotatable>false</rotatable>
 		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
