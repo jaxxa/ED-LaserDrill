@@ -17,12 +17,14 @@ namespace EnhancedDevelopment.LaserDrill
 
         public override void SpawnSetup(Map map, Boolean respawnAfterLoading)
         {
-            
             base.SpawnSetup(map, respawnAfterLoading);
             this._PowerComp = this.GetComp<CompPowerTrader>();
             this._FlickComp = this.GetComp<CompFlickable>();
-
-            this.CalculateWorkStart();
+            
+            if (!respawnAfterLoading)
+            {
+                this.CalculateWorkStart();
+            }
         }
 
         public override void ExposeData()
@@ -30,22 +32,25 @@ namespace EnhancedDevelopment.LaserDrill
             base.ExposeData();
             Scribe_Values.Look<int>(ref this.DrillWork, "drillWork", 0);
             Scribe_Values.Look<int>(ref this.DrillIterationNumber, "DrillIterationNumber", 0);
-
-
         }
 
         public override void TickRare()
         {
-            if (this._PowerComp.PowerOn)
+            if (this.Map.GetComponent<MapComp_LaserDrill>().IsActive(this))
             {
-                //Log.Message("Reducing count");
-                this.disableOthers();
-                this.DrillWork = this.DrillWork - 1;
+                Log.Message("Active");
             }
             else
             {
-                //Log.Message("No Power for drill.");
+                Log.Message("Inactive");
+                return;
             }
+                        
+            if (this._PowerComp.PowerOn)
+            {
+                this.DrillWork = this.DrillWork - 1;
+            }
+            
 
             if (this.DrillWork <= 0)
             {
@@ -64,7 +69,7 @@ namespace EnhancedDevelopment.LaserDrill
                     //Respawn
                     IntVec3 _position = this.Position;
                     Map _Map = this.Map;
-                    
+
                     this.DrillIterationNumber += 1;
                     this.CalculateWorkStart();
 
@@ -72,51 +77,9 @@ namespace EnhancedDevelopment.LaserDrill
                     GenPlace.TryPlaceThing(_MiniThing, _position, _Map, ThingPlaceMode.Near, null);
                 }
 
-                               
+
             }
             base.Tick();
-        }
-
-        public void disableOthers()
-        {
-            if (Mod_LaserDrill.Settings.AllowSimultaneousDrilling)
-            {
-                return;
-            }
-
-            //<Pawn>(t => t.Position.WithinHorizontalDistanceOf(this.Position, this.MAX_DISTANCE));               
-            IEnumerable<Building> LaserBuildings = this.Map.listerBuildings.allBuildingsColonist.Where<Building>(t => t.def.defName == "LaserDrill");
-
-            if (LaserBuildings != null)
-            {
-                //List<Thing> fireTo
-                foreach (Building_LaserDrill currentBuilding in LaserBuildings.ToList())
-                {
-                    //Log.Message("Checking");
-                    if (currentBuilding != this)
-                    {
-                        //if (currentBuilding._PowerComp.DesirePowerOn)
-                        if (currentBuilding._FlickComp.SwitchIsOn)
-                        {
-                            Messages.Message("Only One Laser Drill Can be active at a Time.", MessageTypeDefOf.RejectInput);
-                            //currentBuilding.powerComp.DesirePowerOn = false;
-
-                            // currentBuilding._PowerComp.PowerOn = false;
-
-                            currentBuilding._FlickComp.DoFlick();
-
-                           // currentBuilding.powerComp. = false;
-                        }
-
-                    }
-                }
-            }
-            else
-            {
-               // Log.Error("List Null");
-
-            }
-                             
         }
 
         public override string GetInspectString()
@@ -151,22 +114,20 @@ namespace EnhancedDevelopment.LaserDrill
                     _StringBuilder.Append(_Text);
                 }
             }
-            
+
             if (Mod_LaserDrill.Settings.DrillCharges > 1)
             {
                 _StringBuilder.AppendLine("");
                 _StringBuilder.Append("Charges: " + this.DrillIterationNumber + " / " + Mod_LaserDrill.Settings.DrillCharges);
             }
-            
+
             return _StringBuilder.ToString();
         }
 
         private void CalculateWorkStart()
         {
-            //this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * this.DrillIterationNumber * this.DrillIterationNumber;
-            //Log.Message("Pow:" + Mod_LaserDrill.Settings.RequiredDrillWork.ToString() + " - " + this.DrillIterationNumber);
-            //this.DrillWork = (int)Math.Pow(Mod_LaserDrill.Settings.RequiredDrillWork, this.DrillIterationNumber);
             this.DrillWork = Mod_LaserDrill.Settings.RequiredDrillWork * (int)Math.Pow(2, this.DrillIterationNumber - 1);
+
         }
 
     } // End Class
