@@ -14,5 +14,7 @@ namespace EnhancedDevelopment.LaserDrill.Comps
             this.compClass = typeof(Comp_LaserDrill);
         }
 
+        public bool FillMode = false;
+
     }
 }

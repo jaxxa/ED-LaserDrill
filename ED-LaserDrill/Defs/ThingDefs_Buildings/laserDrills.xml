@@ -44,6 +44,7 @@
 		</building>
 		<comps>
 			<li Class="EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill">
+				<FillMode>False</FillMode>
 			</li>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
@@ -73,7 +74,6 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserFiller</defName>
 		<label>Laser Steam Geyser Filler</label>
-		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserFiller</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserFiller</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -101,6 +101,9 @@
 			<li>Stony</li>
 		</stuffCategories>
 		<comps>
+			<li Class="EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill">
+				<FillMode>True</FillMode>
+			</li>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
 				<basePowerConsumption>1200</basePowerConsumption>

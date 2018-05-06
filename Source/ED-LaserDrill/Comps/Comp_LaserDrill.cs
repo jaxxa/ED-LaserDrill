@@ -16,12 +16,14 @@ namespace EnhancedDevelopment.LaserDrill.Comps
         //Unsaved
         private CompPowerTrader _PowerComp;
         private CompFlickable _FlickComp;
-        
+        private CompProperties_LaserDrill Properties;
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
             this._PowerComp = this.parent.GetComp<CompPowerTrader>();
             this._FlickComp = this.parent.GetComp<CompFlickable>();
+            this.Properties = this.props as CompProperties_LaserDrill;
 
             if (!respawningAfterLoad)
             {
@@ -52,34 +54,42 @@ namespace EnhancedDevelopment.LaserDrill.Comps
             {
                 this.DrillWork = this.DrillWork - 1;
             }
-
-
+            
             if (this.DrillWork <= 0)
             {
                 Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
 
-                GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
-
-                if (this.DrillIterationNumber >= Mod_LaserDrill.Settings.DrillCharges)
+                if (this.Properties.FillMode)
                 {
-                    //Destroy
-
-                    this.parent.Destroy(DestroyMode.Vanish);
+                    if (this.FindClosestGuyser() != null)
+                    {
+                        this.FindClosestGuyser().DeSpawn();
+                        this.parent.Destroy(DestroyMode.Vanish);
+                    }
                 }
                 else
                 {
-                    //Respawn
-                    IntVec3 _position = this.parent.Position;
-                    Map _Map = this.parent.Map;
+                    GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
-                    this.DrillIterationNumber += 1;
-                    this.CalculateWorkStart();
+                    if (this.DrillIterationNumber >= Mod_LaserDrill.Settings.DrillCharges)
+                    {
+                        //Destroy
 
-                    MinifiedThing _MiniThing = this.parent.MakeMinified();
-                    GenPlace.TryPlaceThing(_MiniThing, _position, _Map, ThingPlaceMode.Near, null);
+                        this.parent.Destroy(DestroyMode.Vanish);
+                    }
+                    else
+                    {
+                        //Respawn
+                        IntVec3 _position = this.parent.Position;
+                        Map _Map = this.parent.Map;
+
+                        this.DrillIterationNumber += 1;
+                        this.CalculateWorkStart();
+
+                        MinifiedThing _MiniThing = this.parent.MakeMinified();
+                        GenPlace.TryPlaceThing(_MiniThing, _position, _Map, ThingPlaceMode.Near, null);
+                    }
                 }
-
-
             }
             base.CompTickRare();
             
@@ -136,5 +146,33 @@ namespace EnhancedDevelopment.LaserDrill.Comps
 
         }
 
+
+        public Thing FindClosestGuyser()
+        {
+            List<Thing> steamGeysers = this.parent.Map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
+            Thing currentLowestGuyser = null;
+
+            double lowestDistance = double.MaxValue;
+
+            foreach (Thing currentGuyser in steamGeysers)
+            {
+                //if (currentGuyser.SpawnedInWorld)
+                if (currentGuyser.Spawned)
+                {
+                    if (this.parent.Position.InHorDistOf(currentGuyser.Position, 5))
+                    {
+                        double distance = Math.Sqrt(Math.Pow((this.parent.Position.x - currentGuyser.Position.x), 2) + Math.Pow((this.parent.Position.y - currentGuyser.Position.y), 2));
+
+                        if (distance < lowestDistance)
+                        {
+
+                            lowestDistance = distance;
+                            currentLowestGuyser = currentGuyser;
+                        }
+                    }
+                }
+            }
+            return currentLowestGuyser;
+        }
     }
 }
