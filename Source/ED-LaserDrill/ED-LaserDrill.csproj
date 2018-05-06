@@ -48,8 +48,6 @@
   <ItemGroup>
     <Compile Include="Comps\CompProperties_LaserDrill.cs" />
     <Compile Include="Comps\Comp_LaserDrill.cs" />
-    <Compile Include="LaserDrill\Building_LaserDrill.cs" />
-    <Compile Include="LaserDrill\Building_LaserFiller.cs" />
     <Compile Include="MapComp_LaserDrill.cs" />
     <Compile Include="Settings\Mod_LaserDrill.cs" />
     <Compile Include="Settings\ModSettings_LaserDrill.cs" />
