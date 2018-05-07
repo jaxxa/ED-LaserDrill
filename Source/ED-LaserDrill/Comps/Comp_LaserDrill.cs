@@ -38,35 +38,42 @@ namespace EnhancedDevelopment.LaserDrill.Comps
 
         public override void CompTickRare()
         {
-            if (this.parent.Map.GetComponent<MapComp_LaserDrill>().IsActive(this.parent))
+            if (!this.parent.Map.GetComponent<MapComp_LaserDrill>().IsActive(this.parent))
             {
-                Log.Message("Active");
-            }
-            else
-            {
-                Log.Message("Inactive");
                 return;
             }
-
+            
             if (this._PowerComp.PowerOn)
             {
+                if (this.Properties.FillMode)
+                {
+                    if(this.FindClosestGuyser() == null)
+                    {
+                        return;
+                    }
+                }
                 this.DrillWork = this.DrillWork - 1;
             }
 
             if (this.DrillWork <= 0)
             {
-                Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
 
                 if (this.Properties.FillMode)
                 {
                     if (this.FindClosestGuyser() != null)
                     {
+                        Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
                         this.FindClosestGuyser().DeSpawn();
                         this.parent.Destroy(DestroyMode.Vanish);
+                    }
+                    else
+                    {
+                        Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.TaskCompletion);
                     }
                 }
                 else
                 {
+                    Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
                     GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
                     //Destroy
@@ -93,17 +100,31 @@ namespace EnhancedDevelopment.LaserDrill.Comps
                 }
                 else
                 {
-                    if (_PowerComp != null)
-                    {
                         if (this._PowerComp.PowerOn)
                         {
-                            _StringBuilder.AppendLine("Drill Status: Online");
+                            if (this.Properties.FillMode)
+                            {
+
+                                if (this.FindClosestGuyser() != null)
+                                {
+                                    _StringBuilder.AppendLine("Drill Status: Online");
+                                }
+                                else
+                                {
+                                    _StringBuilder.AppendLine("Drill Status: No Found Guyser");
+                                }
+                            }
+                            else
+                            {
+                                _StringBuilder.AppendLine("Drill Status: Online");
+                            }
+
                         }
                         else
                         {
                             _StringBuilder.AppendLine("Drill Status: Low Power");
                         }
-                    }
+                    
                     _StringBuilder.Append("Drill Work Remaining: " + this.DrillWork);
                 }
             }
