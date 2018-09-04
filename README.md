@@ -32,3 +32,6 @@ Aditional details can be fount in About.xml
 
 0.18.0.0
 *Update to Beta 18
+
+0.19.0.0
+ * Update to Beta 19

@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-
-	<!--================================ Abstract bases ======================================-->
-
-	<ThingDef Name="BuildingBase" Abstract="True">
-		<category>Building</category>
-		<thingClass>Building</thingClass>
-		<soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-		<selectable>true</selectable>
-		<drawerType>MapMeshAndRealTime</drawerType>
-		<terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-		<repairEffect>Repair</repairEffect>
-		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-		<filthLeaving>BuildingRubble</filthLeaving>
-	</ThingDef>
-
-
-
 	<!--================================ Lasers ======================================-->
 
 	<ThingDef ParentName="BuildingBase">
@@ -54,7 +37,7 @@
 		</comps>
 		<size>(6,6)</size>
 		<costList>
-			<Component>10</Component>
+			<ComponentIndustrial>10</ComponentIndustrial>
 			<Steel>600</Steel>
 		</costList>
 		<hasInteractionCell>False</hasInteractionCell>
@@ -92,7 +75,7 @@
 		<description>Removes a nearby SteamGeyser by filling it with rock and melting that rock with a laser to create a buildable surface</description>
 		<size>(3,3)</size>
 		<costList>
-			<Component>4</Component>
+			<ComponentIndustrial>4</ComponentIndustrial>
 		</costList>
 		<costStuffCount>500</costStuffCount>
 		<stuffCategories>
