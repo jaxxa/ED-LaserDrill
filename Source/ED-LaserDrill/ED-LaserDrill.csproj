@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="LaserDrill\Building_LaserDrill.cs" />
     <Compile Include="LaserDrill\Building_LaserFiller.cs" />
+    <Compile Include="Settings\Mod_LaserDrill.cs" />
+    <Compile Include="Settings\ModSettings_LaserDrill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

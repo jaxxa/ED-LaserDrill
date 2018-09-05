@@ -10,7 +10,7 @@ namespace EnhancedDevelopment.LaserDrill
     [StaticConstructorOnStartup]
     public class Building_LaserDrill : Building
     {
-        private int drillWork = 500;
+        private int drillWork = Mod_LaserDrill.Settings.RequiredDrillWork;
         private CompPowerTrader _PowerComp;
         private CompFlickable _FlickComp;
 
@@ -53,6 +53,11 @@ namespace EnhancedDevelopment.LaserDrill
 
         public void disableOthers()
         {
+            if (Mod_LaserDrill.Settings.AllowSimultaneousDrilling)
+            {
+                return;
+            }
+
             //<Pawn>(t => t.Position.WithinHorizontalDistanceOf(this.Position, this.MAX_DISTANCE));               
             IEnumerable<Building> LaserBuildings = this.Map.listerBuildings.allBuildingsColonist.Where<Building>(t => t.def.defName == "LaserDrill");
 
