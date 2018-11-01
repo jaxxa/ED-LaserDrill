@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>ED-Laser Drill</name>
-	<targetVersion>0.19.2006</targetVersion>
+	<targetVersion>1.0.2059</targetVersion>
 	<author>Jaxxa</author>
-	<url>https://ludeon.com/forums/index.php?topic=37158</url>
-	<description>Version: 0.19.0.0
-Discussion, Non Steam Downloads of this mod is available at: https://ludeon.com/forums/index.php?topic=37158
+	<url>https://github.com/jaxxa/JaxxaRimworldReleaseCollection/blob/master/README.md</url>
+	<description>Version: 1.0.0.0
+Links to all my mods including non steam versions available at: https://github.com/jaxxa/JaxxaRimworldReleaseCollection/blob/master/README.md
 
 Adds a Laser Drill that allows the creation of new steam vents, and a Laser Filler that allows you to remove unwanted steam vents.
 	</description>
