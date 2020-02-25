@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!--================================ Lasers ======================================-->
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>LaserDrill</defName>
+		<label>Laser Steam Geyser Drill</label>
+		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserDrill</thingClass>
+		<graphicData>
+			<texPath>Things/Buildings/LaserDrill</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(6,6)</drawSize>
+		</graphicData>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>Impassable</passability>
+		<castEdgeShadows>true</castEdgeShadows>
+		<fillPercent>1</fillPercent>
+		<tickerType>Rare</tickerType>
+		<statBases>
+			<WorkToBuild>1800</WorkToBuild>
+			<MaxHitPoints>350</MaxHitPoints>
+			<Flammability>1.0</Flammability>
+		</statBases>
+		<description>Mines out rock to create a large hole through to the steam networks below the planets surface.</description>
+		<building>
+			<wantsHopperAdjacent>false</wantsHopperAdjacent>
+		</building>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>1200</basePowerConsumption>
+				<transmitsPower>true</transmitsPower>
+			</li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+		</comps>
+		<size>(6,6)</size>
+		<costList>
+			<ComponentIndustrial>10</ComponentIndustrial>
+			<Steel>600</Steel>
+		</costList>
+		<hasInteractionCell>False</hasInteractionCell>
+		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+		<designationCategory>Power</designationCategory>
+		<staticSunShadowHeight>0.75</staticSunShadowHeight>
+		<researchPrerequisites>
+			<li>Research_LaserSteamGeyser_Drill</li>
+		</researchPrerequisites>
+	</ThingDef>
+
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>LaserFiller</defName>
+		<label>Laser Steam Geyser Filler</label>
+		<thingClass>EnhancedDevelopment.LaserDrill.Building_LaserFiller</thingClass>
+		<graphicData>
+			<texPath>Things/Buildings/LaserFiller</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(3,3)</drawSize>
+		</graphicData>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>Impassable</passability>
+		<castEdgeShadows>true</castEdgeShadows>
+		<fillPercent>1</fillPercent>
+		<specialDisplayRadius>5</specialDisplayRadius>
+		<statBases>
+			<MaxHitPoints>500</MaxHitPoints>
+			<WorkToBuild>6000</WorkToBuild>
+			<Flammability>1.0</Flammability>
+			<Beauty>-40</Beauty>
+		</statBases>
+		<tickerType>Rare</tickerType>
+		<description>Removes a nearby SteamGeyser by filling it with rock and melting that rock with a laser to create a buildable surface</description>
+		<size>(3,3)</size>
+		<costList>
+			<ComponentIndustrial>4</ComponentIndustrial>
+		</costList>
+		<costStuffCount>500</costStuffCount>
+		<stuffCategories>
+			<li>Stony</li>
+		</stuffCategories>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>1200</basePowerConsumption>
+				<transmitsPower>true</transmitsPower>
+			</li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+		</comps>
+		<rotatable>false</rotatable>
+		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+		<designationCategory>Power</designationCategory>
+		<staticSunShadowHeight>1.0</staticSunShadowHeight>
+		<building>
+			<soundAmbient>GeothermalPlant_Ambience</soundAmbient>
+		</building>
+		<researchPrerequisites>
+			<li>Research_LaserSteamGeyser_Filler</li>
+		</researchPrerequisites>
+	</ThingDef>
+
+
+</Defs>
