@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>ED-Laser Drill</name>
-	<targetVersion>1.0.2059</targetVersion>
+	<name>ED-Laser-Drill</name>
+	<packageId>Jaxxa.ED.LaserDrill</packageId>
+	<supportedVersions>
+		<li>1.0</li>
+		<li>1.1</li>
+	</supportedVersions>
 	<author>Jaxxa</author>
 	<url>https://github.com/jaxxa/JaxxaRimworldReleaseCollection/blob/master/README.md</url>
-	<description>Version: 1.0.0.0
+	<description>Version: 2.0.0.0
 Links to all my mods including non steam versions available at: https://github.com/jaxxa/JaxxaRimworldReleaseCollection/blob/master/README.md
 
 Adds a Laser Drill that allows the creation of new steam vents, and a Laser Filler that allows you to remove unwanted steam vents.

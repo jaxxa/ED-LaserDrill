@@ -38,3 +38,6 @@ Aditional details can be fount in About.xml
  
 1.0.0.0
  * Update to Rimworld 1.0
+ 
+2.0.0.0
+ * Update to Rimworld 1.1 and 1.0
