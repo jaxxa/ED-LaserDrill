@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill", "ED-LaserDrill\ED-LaserDrill.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.0", "1.0\ED-LaserDrill_1.0.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B990CC4-40E4-4FF4-A70A-84DF0E4445AD}
 	EndGlobalSection
 EndGlobal
