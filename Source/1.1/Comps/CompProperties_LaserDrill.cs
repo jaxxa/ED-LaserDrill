@@ -1,11 +1,10 @@
-﻿using EnhancedDevelopment.Prometheus.LaserDrill;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
 
-namespace EnhancedDevelopment.LaserDrill.LaserDrill
+namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 {
     class CompProperties_LaserDrill : CompProperties
     {

@@ -5,8 +5,8 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-namespace EnhancedDevelopment.LaserDrill
-    {
+namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
+{
         class Mod_LaserDrill : Verse.Mod
         {
 

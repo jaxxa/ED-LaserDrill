@@ -28,12 +28,8 @@
 			<wantsHopperAdjacent>false</wantsHopperAdjacent>
 		</building>
 		<comps>
-			<li Class="EnhancedDevelopment.Prometheus.Fabrication.CompProperties_Fabricated">
-				<RequiredPower>500</RequiredPower>
-				<RequiredMaterials>200</RequiredMaterials>
-				<RequiredWork>200</RequiredWork>
-			</li>
-			<li Class="EnhancedDevelopment.Prometheus.LaserDrill.CompProperties_LaserDrill"/>
+			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill"/>
+			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrillRequiresPower"/>
 		</comps>
 		<size>(6,6)</size>
 		<costList>
@@ -52,7 +48,7 @@
 	</ThingDef>
 
 	<ThingDef Name="LaserDrillVisual" ParentName="EtherealThingBase">
-		<thingClass>EnhancedDevelopment.Prometheus.LaserDrill.LaserDrillVisual</thingClass>
+		<thingClass>Jaxxa.EnhancedDevelopment.LaserDrill.Things.LaserDrillVisual</thingClass>
 		<defName>LaserDrillVisual</defName>
 		<label>LaserDrillVisual</label>
 		<tickerType>Normal</tickerType>

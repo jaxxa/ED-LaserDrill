@@ -1,4 +1,5 @@
-﻿using EnhancedDevelopment.LaserDrill.LaserDrill;
+﻿using Jaxxa.EnhancedDevelopment.Core.Comp.Interface;
+using Jaxxa.EnhancedDevelopment.LaserDrill.Things;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-namespace EnhancedDevelopment.Prometheus.LaserDrill
+namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 {
     [StaticConstructorOnStartup]
     class Comp_LaserDrill : ThingComp
@@ -63,7 +64,25 @@ namespace EnhancedDevelopment.Prometheus.LaserDrill
 
         private bool HasSufficientShipPower()
         {
-            return GameComponent_Prometheus.Instance.Comp_Quest.ResourceGetReserveStatus(EnumResourceType.Power) < Mod_EDPrometheus.Settings.LaserDrill.RequiredDrillShipPower;
+
+            return this.RequiresShipResourcesComp.Satisfied;
+        }
+
+        private IRequiresShipResources RequiresShipResourcesComp
+        {
+            get
+            {
+
+                var _Comp = this.parent.GetComps<ThingComp>().FirstOrDefault(x => x is IRequiresShipResources);
+
+                var _ResourcesCompInterface = _Comp as IRequiresShipResources;
+
+                if (_ResourcesCompInterface == null)
+                {
+                    Log.Error(nameof(Comp_LaserDrill) + " Failed to get Comp With " + nameof(IRequiresShipResources));
+                }
+                return _ResourcesCompInterface;
+            }
         }
 
         #region Overrides
@@ -136,7 +155,7 @@ namespace EnhancedDevelopment.Prometheus.LaserDrill
                     }
                 }
 
-                _StringBuilder.Append("Ship Power: " + (GameComponent_Prometheus.Instance.Comp_Quest.ResourceGetReserveStatus(EnumResourceType.Power).ToString() + " / " + Mod_EDPrometheus.Settings.LaserDrill.RequiredDrillShipPower).ToString());
+                _StringBuilder.Append(this.RequiresShipResourcesComp.StatusString);
 
             }
 
@@ -193,7 +212,7 @@ namespace EnhancedDevelopment.Prometheus.LaserDrill
 
         private void SetRequiredDrillScanningToDefault()
         {
-            this.DrillScanningRemaining = Mod_EDPrometheus.Settings.LaserDrill.RequiredDrillScanning;
+            this.DrillScanningRemaining = Settings.Mod_LaserDrill.Settings.RequiredDrillWork;
         }
 
         public Thing FindClosestGeyser()
@@ -230,7 +249,7 @@ namespace EnhancedDevelopment.Prometheus.LaserDrill
             {
                 Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
                 this.FindClosestGeyser().DeSpawn();
-                GameComponent_Prometheus.Instance.Comp_Quest.ResourceRequestReserve(EnumResourceType.Power, Mod_EDPrometheus.Settings.LaserDrill.RequiredDrillShipPower);
+                //TODO JW: Remove Power from Comp
                 this.ShowLaserVisually();
 
                 this.parent.Destroy(DestroyMode.Vanish);
@@ -244,7 +263,7 @@ namespace EnhancedDevelopment.Prometheus.LaserDrill
         public void TriggerLaser()
         {
             Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
-            GameComponent_Prometheus.Instance.Comp_Quest.ResourceRequestReserve(GameComponent_Prometheus_Quest.EnumResourceType.Power, Mod_EDPrometheus.Settings.LaserDrill.RequiredDrillShipPower);
+            //TODO JW: Remove Power from ship
             this.ShowLaserVisually();
             GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
