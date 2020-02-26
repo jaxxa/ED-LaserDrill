@@ -14,7 +14,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -22,7 +22,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             get
             {
-                return "Laser Drill Version";
+                return "Wooo, full power";
             }
         }
     }

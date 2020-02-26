@@ -100,11 +100,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 if (this.HasSufficientShipPower())
                 {
-                    this.m_CurrentStaus = EnumLaserDrillState.LowPower;
+                    this.m_CurrentStaus = EnumLaserDrillState.ReadyToActivate;
                 }
                 else
                 {
-                    this.m_CurrentStaus = EnumLaserDrillState.ReadyToActivate;
+                    this.m_CurrentStaus = EnumLaserDrillState.LowPower;
                 }
 
             }
