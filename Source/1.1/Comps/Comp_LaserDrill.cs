@@ -14,13 +14,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
     class Comp_LaserDrill : ThingComp
     {
 
-        public enum EnumLaserDrillState
-        {
-            Scanning,
-            LowPower,
-            ReadyToActivate
-        }
-
         #region Variables
 
         //Saved
@@ -32,7 +25,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         private static Texture2D UI_LASER_ACTIVATE;
         private static Texture2D UI_LASER_ACTIVATEFILL;
 
-        private EnumLaserDrillState m_CurrentStaus = EnumLaserDrillState.Scanning;
+        private CompPowerTrader m_PowerComp;
 
         #endregion Variables
 
@@ -48,9 +41,9 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            //this._PowerComp = this.parent.GetComp<CompPowerTrader>();
             //this._FlickComp = this.parent.GetComp<CompFlickable>();
             this.Properties = this.props as CompProperties_LaserDrill;
+            this.m_PowerComp = parent.TryGetComp<CompPowerTrader>();
 
             if (!respawningAfterLoad)
             {
@@ -61,10 +54,10 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         #endregion Initilisation
 
-
-        private bool HasSufficientShipPower()
+        #region IRequiresShipResources
+        
+        private bool HasSufficientShipResources()
         {
-
             return this.RequiresShipResourcesComp.Satisfied;
         }
 
@@ -85,6 +78,22 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             }
         }
 
+        #endregion
+
+        private bool IsScanComplete()
+        {
+            return (this.DrillScanningRemainingTicks <= 0);
+        }
+
+        private bool HasPowerToScan()
+        {
+            if (this.m_PowerComp != null)
+            {
+                return this.m_PowerComp.PowerOn;
+            }
+            return true;
+        }
+        
         #region Overrides
 
         public override void PostExposeData()
@@ -95,27 +104,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public override void CompTickRare()
         {
-
-            if (this.DrillScanningRemainingTicks <= 0)
+            if (!this.IsScanComplete() & this.HasPowerToScan())
             {
-                if (this.HasSufficientShipPower())
-                {
-                    this.m_CurrentStaus = EnumLaserDrillState.ReadyToActivate;
-                }
-                else
-                {
-                    this.m_CurrentStaus = EnumLaserDrillState.LowPower;
-                }
-
-            }
-            else
-            {
-                this.m_CurrentStaus = EnumLaserDrillState.Scanning;
-
                 //250 Ticks per Rare Tick
-                this.DrillScanningRemainingTicks = this.DrillScanningRemainingTicks - 250;
+                this.DrillScanningRemainingTicks -= 250;
             }
-
 
             base.CompTickRare();
 
@@ -130,29 +123,20 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             //if (this.parent.Map != null && this.parent.Map.GetComponent<MapComp_LaserDrill>() != null)
 
             {
-                //if (!this.parent.Map.GetComponent<MapComp_LaserDrill>().IsActive(this.parent))
-                //{
-                //    _StringBuilder.Append("Drill Status: Offline, Waiting for another drill to finish.");
-                //}
-                //else
+                if(this.IsScanComplete())
+                {
 
-                if (this.m_CurrentStaus == EnumLaserDrillState.LowPower)
-                {
                     _StringBuilder.AppendLine("Scan complete");
-                    _StringBuilder.AppendLine("Low Power on Ship");
                 }
-                else if (this.m_CurrentStaus == EnumLaserDrillState.ReadyToActivate)
+                else
                 {
-                    _StringBuilder.AppendLine("Scan complete");
-                    _StringBuilder.AppendLine("Ready for Laser Activation");
-                }
-                else if (this.m_CurrentStaus == EnumLaserDrillState.Scanning)
-                {
-                    _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
-
-                    if (!this.HasSufficientShipPower())
+                    if (this.HasPowerToScan())
                     {
-                        _StringBuilder.AppendLine("Low Power on Ship");
+                        _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
+                    }
+                    else 
+                    {
+                        _StringBuilder.AppendLine("Scanning Paused, Power Offline.");
                     }
                 }
 
@@ -173,30 +157,35 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 yield return g;
             }
 
-            if (this.m_CurrentStaus == EnumLaserDrillState.ReadyToActivate)
+            if (this.IsScanComplete() & this.HasSufficientShipResources())
             {
-                Command_Action act = new Command_Action();
-                act.action = () => this.TriggerLaser();
-                act.icon = UI_LASER_ACTIVATE;
-                act.defaultLabel = "Activate Laser";
-                act.defaultDesc = "Activate Laser";
-                act.activateSound = SoundDef.Named("Click");
-                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                //act.groupKey = 689736;
-                yield return act;
-            }
 
-            if (this.m_CurrentStaus == EnumLaserDrillState.ReadyToActivate)
-            {
-                Command_Action act = new Command_Action();
-                act.action = () => this.TriggerLaserToFill();
-                act.icon = UI_LASER_ACTIVATEFILL;
-                act.defaultLabel = "Activate Laser Fill";
-                act.defaultDesc = "Activate Laser Fill";
-                act.activateSound = SoundDef.Named("Click");
-                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                //act.groupKey = 689736;
-                yield return act;
+
+                if (true)
+                {
+                    Command_Action act = new Command_Action();
+                    act.action = () => this.TriggerLaser();
+                    act.icon = UI_LASER_ACTIVATE;
+                    act.defaultLabel = "Activate Laser";
+                    act.defaultDesc = "Activate Laser";
+                    act.activateSound = SoundDef.Named("Click");
+                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                    //act.groupKey = 689736;
+                    yield return act;
+                }
+
+                if (true)
+                {
+                    Command_Action act = new Command_Action();
+                    act.action = () => this.TriggerLaserToFill();
+                    act.icon = UI_LASER_ACTIVATEFILL;
+                    act.defaultLabel = "Activate Laser Fill";
+                    act.defaultDesc = "Activate Laser Fill";
+                    act.activateSound = SoundDef.Named("Click");
+                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                    //act.groupKey = 689736;
+                    yield return act;
+                }
             }
 
         } //CompGetGizmosExtra()
