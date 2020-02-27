@@ -46,8 +46,7 @@
 		<designationCategory>Power</designationCategory>
 		<staticSunShadowHeight>0.75</staticSunShadowHeight>
 		<researchPrerequisites>
-			<li>ED_Prometheus_Quest_Unlock_Research</li>
-			<li>ED_Prometheus_PowerDistribution_2_Research</li>
+			<li>Research_LaserSteamGeyser_Drill</li>
 		</researchPrerequisites>
 	</ThingDef>
 

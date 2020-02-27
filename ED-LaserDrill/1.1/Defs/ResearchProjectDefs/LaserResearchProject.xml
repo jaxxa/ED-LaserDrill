@@ -8,25 +8,11 @@
 		<baseCost>4000</baseCost>
 		<techLevel>Industrial</techLevel>
 		<prerequisites>
-			<li>DeepDrilling</li>
-			<li>GeothermalPower</li>
+			<li>GroundPenetratingScanner</li>
 		</prerequisites>
-		<researchViewX>10</researchViewX>
-		<researchViewY>0</researchViewY>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>0.80</researchViewY>
 		
-	</ResearchProjectDef>
-
-	<ResearchProjectDef>
-		<defName>Research_LaserSteamGeyser_Filler</defName>
-		<label>Laser Steam Geyser Filler</label>
-		<description>Using a laser, fill in a steam vent with stone that you melt using a laser to create a buildable surface.</description>
-		<baseCost>2000</baseCost>
-		<techLevel>Industrial</techLevel>
-		<prerequisites>
-			<li>Research_LaserSteamGeyser_Drill</li>
-		</prerequisites>
-		<researchViewX>11</researchViewX>
-		<researchViewY>0</researchViewY>
 	</ResearchProjectDef>
 
 </Defs>
