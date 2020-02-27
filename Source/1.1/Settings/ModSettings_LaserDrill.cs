@@ -11,8 +11,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
     {
 
         //Fields
-        public int RequiredDrillWork = 500;
-        public int RequiredFillWork = 500;
+        public int RequiredScanningTimeDays = 10;
         public bool AllowSimultaneousDrilling = false;
 
 
@@ -20,15 +19,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
         {
             base.ExposeData();
 
-            //Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
-            //Scribe_Values.Look<string>(ref LetterNamesToSuppress, "LetterNamesToSuppress", String.Empty, true);
-
-            //Scribe_Values.Look<bool>(ref Plant24HEnabled, "Plant24HEnabled", false, true);
-            //Scribe_Values.Look<bool>(ref PlantLights24HEnabled, "PlantLights24HEnabled", Plant24HEnabled, true); //If Not Set Default to Plant24HEnabled for backwards compatibility.
-
-            //Scribe_Values.Look<float>(ref BlightScale, "BlightScale", 1, true);
-            Scribe_Values.Look<int>(ref RequiredDrillWork, "RequiredDrillWork", 500, true);
-            Scribe_Values.Look<int>(ref RequiredFillWork, "RequiredFillWork", 500, true);
+            Scribe_Values.Look<int>(ref RequiredScanningTimeDays, "RequiredScanningTimeDays", 10, true);
             Scribe_Values.Look<bool>(ref AllowSimultaneousDrilling, "AllowSimultaneousDrilling", false, true);
             
         }
@@ -42,35 +33,17 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
 
             listing_Standard.GapLine(12f);
 
-            listing_Standard.Label("Drilling Work Required: " + RequiredDrillWork.ToString());
+            listing_Standard.Label("Scanning Days Required: " + RequiredScanningTimeDays.ToString());
             listing_Standard.Gap();
             Listing_Standard _listing_Standard_RequiredDrillWork = new Listing_Standard();
             _listing_Standard_RequiredDrillWork.Begin(listing_Standard.GetRect(30f));
             _listing_Standard_RequiredDrillWork.ColumnWidth = 70;
-            _listing_Standard_RequiredDrillWork.IntAdjuster(ref RequiredDrillWork, 10, 10);
+            _listing_Standard_RequiredDrillWork.IntAdjuster(ref RequiredScanningTimeDays, 1, 1);
             _listing_Standard_RequiredDrillWork.NewColumn();
-            _listing_Standard_RequiredDrillWork.IntAdjuster(ref RequiredDrillWork, 100, 100);
-            _listing_Standard_RequiredDrillWork.NewColumn();
-            _listing_Standard_RequiredDrillWork.IntSetter(ref RequiredDrillWork, 500, "Default");
+            _listing_Standard_RequiredDrillWork.IntSetter(ref RequiredScanningTimeDays, 1, "Default");
             _listing_Standard_RequiredDrillWork.End();
 
-
-            listing_Standard.GapLine(12f);
-            
-            listing_Standard.Label("Filling Work Required: " + RequiredFillWork.ToString());
-            listing_Standard.Gap();
-            Listing_Standard _listing_Standard_RequiredFillWork = new Listing_Standard();
-            _listing_Standard_RequiredFillWork.Begin(listing_Standard.GetRect(30f));
-            _listing_Standard_RequiredFillWork.ColumnWidth = 70;
-            _listing_Standard_RequiredFillWork.IntAdjuster(ref RequiredFillWork, 10, 10);
-            _listing_Standard_RequiredFillWork.NewColumn();
-            _listing_Standard_RequiredFillWork.IntAdjuster(ref RequiredFillWork, 100, 100);
-            _listing_Standard_RequiredFillWork.NewColumn();
-            _listing_Standard_RequiredFillWork.IntSetter(ref RequiredFillWork, 500, "Default");
-            _listing_Standard_RequiredFillWork.End();
-
-
-
+                       
             listing_Standard.GapLine(12f);
 
 

@@ -24,7 +24,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         #region Variables
 
         //Saved
-        private int DrillScanningRemaining;
+        private int DrillScanningRemainingTicks;
 
         //Unsaved
         private CompProperties_LaserDrill Properties;
@@ -90,13 +90,13 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look<int>(ref this.DrillScanningRemaining, "DrillScanningRemaining", 0);
+            Scribe_Values.Look<int>(ref this.DrillScanningRemainingTicks, "DrillScanningRemainingTicks", 0);
         } //PostExposeData()
 
         public override void CompTickRare()
         {
 
-            if (this.DrillScanningRemaining <= 0)
+            if (this.DrillScanningRemainingTicks <= 0)
             {
                 if (this.HasSufficientShipPower())
                 {
@@ -112,7 +112,8 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 this.m_CurrentStaus = EnumLaserDrillState.Scanning;
 
-                this.DrillScanningRemaining = this.DrillScanningRemaining - 1;
+                //250 Ticks per Rare Tick
+                this.DrillScanningRemainingTicks = this.DrillScanningRemainingTicks - 250;
             }
 
 
@@ -147,7 +148,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 }
                 else if (this.m_CurrentStaus == EnumLaserDrillState.Scanning)
                 {
-                    _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemaining);
+                    _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
 
                     if (!this.HasSufficientShipPower())
                     {
@@ -212,7 +213,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         private void SetRequiredDrillScanningToDefault()
         {
-            this.DrillScanningRemaining = Settings.Mod_LaserDrill.Settings.RequiredDrillWork;
+            this.DrillScanningRemainingTicks = Settings.Mod_LaserDrill.Settings.RequiredScanningTimeDays * 60000;
         }
 
         public Thing FindClosestGeyser()
