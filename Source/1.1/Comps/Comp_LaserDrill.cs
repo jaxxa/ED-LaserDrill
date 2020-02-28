@@ -27,6 +27,8 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         private CompPowerTrader m_PowerComp;
 
+        private IRequiresShipResources m_RequiresShipResourcesComp;
+
         #endregion Variables
 
         #region Initilisation
@@ -45,6 +47,19 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             this.Properties = this.props as CompProperties_LaserDrill;
             this.m_PowerComp = parent.TryGetComp<CompPowerTrader>();
 
+            //Add IRequiresShipResources Comp
+            var _Comp = this.parent.GetComps<ThingComp>().FirstOrDefault(x => x is IRequiresShipResources);
+            var _ResourcesCompInterface = _Comp as IRequiresShipResources;
+            if (_ResourcesCompInterface == null)
+            {
+                Log.Error(nameof(Comp_LaserDrill) + " Failed to get Comp With " + nameof(IRequiresShipResources));
+            }
+            else
+            {
+                this.m_RequiresShipResourcesComp = _ResourcesCompInterface;
+            }
+
+
             if (!respawningAfterLoad)
             {
                 this.SetRequiredDrillScanningToDefault();
@@ -58,24 +73,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         
         private bool HasSufficientShipResources()
         {
-            return this.RequiresShipResourcesComp.Satisfied;
-        }
-
-        private IRequiresShipResources RequiresShipResourcesComp
-        {
-            get
-            {
-
-                var _Comp = this.parent.GetComps<ThingComp>().FirstOrDefault(x => x is IRequiresShipResources);
-
-                var _ResourcesCompInterface = _Comp as IRequiresShipResources;
-
-                if (_ResourcesCompInterface == null)
-                {
-                    Log.Error(nameof(Comp_LaserDrill) + " Failed to get Comp With " + nameof(IRequiresShipResources));
-                }
-                return _ResourcesCompInterface;
-            }
+            return this.m_RequiresShipResourcesComp.Satisfied;
         }
 
         #endregion
@@ -140,7 +138,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                     }
                 }
 
-                _StringBuilder.Append(this.RequiresShipResourcesComp.StatusString);
+                _StringBuilder.Append(this.m_RequiresShipResourcesComp.StatusString);
 
             }
 
