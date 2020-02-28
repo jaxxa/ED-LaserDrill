@@ -14,7 +14,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         private CompPowerTrader m_PowerComp;
 
-        private int m_RequiredEnergy = 10000;
+        private int m_RequiredEnergy = 6000;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
