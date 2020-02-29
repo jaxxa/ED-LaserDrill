@@ -182,7 +182,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             map.GetComponent<LaserDrillMapComp>().Deregister(this);
             this.SetRequiredDrillScanningToDefault();
             
-
             base.PostDeSpawn(map);
         }
                 

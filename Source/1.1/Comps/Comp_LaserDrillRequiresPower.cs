@@ -67,11 +67,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 if (this.HasEnoughEnergy())
                 {
-                    return "Sufficient Power for Drill Activation, ready to use 10,000 power.";
+                    return "Sufficient Power for Drill Activation, ready to use 6,000 Wd.";
                 }
                 else
                 {
-                    return "Insufficient Power stored for Drill Activation, needs 10,000";
+                    return "Insufficient Power stored for Drill Activation, needs 6,000 Wd.";
 
                 }
             }
