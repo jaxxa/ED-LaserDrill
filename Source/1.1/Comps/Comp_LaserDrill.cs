@@ -40,6 +40,19 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             UI_LASER_ACTIVATE = ContentFinder<Texture2D>.Get("UI/Power/SteamGeyser", true);
             UI_LASER_ACTIVATEFILL = ContentFinder<Texture2D>.Get("UI/Power/RemoveSteamGeyser", true);
         }
+        
+        #endregion Initilisation
+
+        #region IRequiresShipResources
+        
+        private bool HasSufficientShipResources()
+        {
+            return this.m_RequiresShipResourcesComp.Satisfied;
+        }
+
+        #endregion
+
+        #region Overrides
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -68,19 +81,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
             parent.Map.GetComponent<LaserDrillMapComp>().Register(this);
         }
-
-        #endregion Initilisation
-
-        #region IRequiresShipResources
-        
-        private bool HasSufficientShipResources()
-        {
-            return this.m_RequiresShipResourcesComp.Satisfied;
-        }
-
-        #endregion
-
-        #region Overrides
 
         public override void PostExposeData()
         {
@@ -179,10 +179,10 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public override void PostDeSpawn(Map map)
         {
+            map.GetComponent<LaserDrillMapComp>().Deregister(this);
             this.SetRequiredDrillScanningToDefault();
+            
 
-
-            parent.Map.GetComponent<LaserDrillMapComp>().Deregister(this);
             base.PostDeSpawn(map);
         }
                 
