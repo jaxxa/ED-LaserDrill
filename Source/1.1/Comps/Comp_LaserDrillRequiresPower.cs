@@ -25,9 +25,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
 
         }
-
-
-
+               
         private bool HasEnoughEnergy()
         {
             return this.m_PowerComp?.PowerNet?.CurrentStoredEnergy() >= this.m_RequiredEnergy;
@@ -78,5 +76,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 }
             }
         }
+
     }
 }

@@ -26,6 +26,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         private static Texture2D UI_LASER_ACTIVATEFILL;
 
         private CompPowerTrader m_PowerComp;
+        private CompFlickable m_FlickComp;
 
         private IRequiresShipResources m_RequiresShipResourcesComp;
 
@@ -43,7 +44,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            //this._FlickComp = this.parent.GetComp<CompFlickable>();
+            this.m_FlickComp = this.parent.GetComp<CompFlickable>();
             this.Properties = this.props as CompProperties_LaserDrill;
             this.m_PowerComp = parent.TryGetComp<CompPowerTrader>();
 
@@ -65,6 +66,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 this.SetRequiredDrillScanningToDefault();
             }
 
+            parent.Map.GetComponent<LaserDrillMapComp>().Register(this);
         }
 
         #endregion Initilisation
@@ -92,6 +94,23 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             return true;
         }
         
+        public bool IsScanning()
+        {
+            return (!this.IsScanComplete() & this.HasPowerToScan());
+        }
+
+        public void StopScanning()
+        {
+            if (!this.m_FlickComp.WantsFlick() & this.m_FlickComp.SwitchIsOn)
+            {
+                //this.m_FlickComp.SwitchIsOn = false;
+                var _Gizmos = this.m_FlickComp.CompGetGizmosExtra().ToList();
+
+                Command_Toggle _Temp = (Command_Toggle)_Gizmos.First();
+                _Temp.toggleAction.Invoke();
+            }
+        }
+
         #region Overrides
 
         public override void PostExposeData()
@@ -102,10 +121,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public override void CompTickRare()
         {
-            if (!this.IsScanComplete() & this.HasPowerToScan())
+            if (this.IsScanning())
             {
                 //250 Ticks per Rare Tick
                 this.DrillScanningRemainingTicks -= 250;
+
             }
 
             base.CompTickRare();
@@ -191,12 +211,28 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         public override void PostDeSpawn(Map map)
         {
             this.SetRequiredDrillScanningToDefault();
+
+
+            parent.Map.GetComponent<LaserDrillMapComp>().Deregister(this);
             base.PostDeSpawn(map);
         }
 
         #endregion Overrides
 
         #region Methods
+
+        private void DisableOtherDrills()
+        {
+            List<Building> _Buildings = this.parent.Map.listerBuildings.allBuildingsColonist;
+
+            foreach (Building _Building in _Buildings)
+            {
+                Comp_LaserDrill _LaserComp = _Building.GetComp<Comp_LaserDrill>();
+
+
+            }
+            
+        }
 
         private void SetRequiredDrillScanningToDefault()
         {
