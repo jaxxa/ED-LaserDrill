@@ -103,11 +103,12 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             if (!this.m_FlickComp.WantsFlick() & this.m_FlickComp.SwitchIsOn)
             {
-                //this.m_FlickComp.SwitchIsOn = false;
                 var _Gizmos = this.m_FlickComp.CompGetGizmosExtra().ToList();
 
                 Command_Toggle _Temp = (Command_Toggle)_Gizmos.First();
                 _Temp.toggleAction.Invoke();
+
+                this.m_FlickComp.SwitchIsOn = false;
             }
         }
 

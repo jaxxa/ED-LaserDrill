@@ -3,7 +3,7 @@
 
 	<!--================================ Lasers ======================================-->
 
-	<ThingDef ParentName="EDSN_BuildingBase">
+	<ThingDef ParentName="BuildingBase">
 		<defName>LaserDrill</defName>
 		<label>Laser Drill Tageting</label>
 		<thingClass>Building</thingClass>
