@@ -287,6 +287,9 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 _Temp.toggleAction.Invoke();
 
                 this.m_FlickComp.SwitchIsOn = false;
+
+                Messages.Message("Drill Shutdown, Multiple Drills Scanning at once will cause interference.", this.parent, MessageTypeDefOf.RejectInput);
+
             }
         }
 

@@ -24,7 +24,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             if (!Settings.Mod_LaserDrill.Settings.AllowSimultaneousDrilling && 
                 Find.TickManager.TicksGame % LaserDrillMapComp.CHECK_INTERVAL == 0)
             {
-                //Only allow the first Drill to Scann
+                //Only allow the first Drill to Scan
                 bool _Scanning = false;
                 for (int i = 0; i < comps.Count; i++)
                 {
