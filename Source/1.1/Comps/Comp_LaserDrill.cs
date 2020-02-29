@@ -80,38 +80,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         #endregion
 
-        private bool IsScanComplete()
-        {
-            return (this.DrillScanningRemainingTicks <= 0);
-        }
-
-        private bool HasPowerToScan()
-        {
-            if (this.m_PowerComp != null)
-            {
-                return this.m_PowerComp.PowerOn;
-            }
-            return true;
-        }
-        
-        public bool IsScanning()
-        {
-            return (!this.IsScanComplete() & this.HasPowerToScan());
-        }
-
-        public void StopScanning()
-        {
-            if (!this.m_FlickComp.WantsFlick() & this.m_FlickComp.SwitchIsOn)
-            {
-                var _Gizmos = this.m_FlickComp.CompGetGizmosExtra().ToList();
-
-                Command_Toggle _Temp = (Command_Toggle)_Gizmos.First();
-                _Temp.toggleAction.Invoke();
-
-                this.m_FlickComp.SwitchIsOn = false;
-            }
-        }
-
         #region Overrides
 
         public override void PostExposeData()
@@ -217,23 +185,10 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             parent.Map.GetComponent<LaserDrillMapComp>().Deregister(this);
             base.PostDeSpawn(map);
         }
-
+                
         #endregion Overrides
 
         #region Methods
-
-        private void DisableOtherDrills()
-        {
-            List<Building> _Buildings = this.parent.Map.listerBuildings.allBuildingsColonist;
-
-            foreach (Building _Building in _Buildings)
-            {
-                Comp_LaserDrill _LaserComp = _Building.GetComp<Comp_LaserDrill>();
-
-
-            }
-            
-        }
 
         private void SetRequiredDrillScanningToDefault()
         {
@@ -302,9 +257,40 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             IntVec3 _Position = IntVec3.FromVector3(new UnityEngine.Vector3(parent.Position.x, parent.Position.y, parent.Position.z - 2));
             LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), _Position, parent.Map, WipeMode.Vanish);
         }
+        
+        private bool IsScanComplete()
+        {
+            return (this.DrillScanningRemainingTicks <= 0);
+        }
+
+        private bool HasPowerToScan()
+        {
+            if (this.m_PowerComp != null)
+            {
+                return this.m_PowerComp.PowerOn;
+            }
+            return true;
+        }
+
+        public bool IsScanning()
+        {
+            return (!this.IsScanComplete() & this.HasPowerToScan());
+        }
+
+        public void StopScanning()
+        {
+            if (!this.m_FlickComp.WantsFlick() & this.m_FlickComp.SwitchIsOn)
+            {
+                var _Gizmos = this.m_FlickComp.CompGetGizmosExtra().ToList();
+
+                Command_Toggle _Temp = (Command_Toggle)_Gizmos.First();
+                _Temp.toggleAction.Invoke();
+
+                this.m_FlickComp.SwitchIsOn = false;
+            }
+        }
 
         #endregion
-
 
     } //Comp_LaserDrill
 
