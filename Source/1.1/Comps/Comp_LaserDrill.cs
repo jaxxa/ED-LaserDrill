@@ -226,11 +226,13 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             if (this.FindClosestGeyser() != null)
             {
-                Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
-                this.FindClosestGeyser().DeSpawn();
                 //TODO JW: Remove Power from Comp
                 this.ShowLaserVisually();
+                this.FindClosestGeyser().DeSpawn();
 
+
+                this.m_RequiresShipResourcesComp.UseResources();
+                Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
                 this.parent.Destroy(DestroyMode.Vanish);
             }
             else
@@ -241,13 +243,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public void TriggerLaser()
         {
-            Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
-            //TODO JW: Remove Power from ship
             this.ShowLaserVisually();
             GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
-            //Destroy
-
+            this.m_RequiresShipResourcesComp.UseResources();
+            Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
             this.parent.Destroy(DestroyMode.Vanish);
         }
 
