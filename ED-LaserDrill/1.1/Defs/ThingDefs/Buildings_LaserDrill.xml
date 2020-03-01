@@ -23,7 +23,7 @@
 			<Flammability>1.0</Flammability>
 			<Mass>100</Mass>
 		</statBases>
-		<description>Conducts a detailed subsurface scan to allow the precise direction of shipboard weapon systems to create or destroy a steam geyser. Warning, the intense heat from the weapon system has been known to start fires.</description>
+		<description>Conducts a detailed subsurface scan to allow the precise direction of orbiting laser systems to create or destroy a steam geyser. After the scan is complete, it can use a large amount of stored battery power to activate the laser of an orbiting satellite to drill or collapse a steam vent. Warning, the intense heat from the weapon system has been known to start fires.</description>
 		<building>
 			<wantsHopperAdjacent>false</wantsHopperAdjacent>
 		</building>

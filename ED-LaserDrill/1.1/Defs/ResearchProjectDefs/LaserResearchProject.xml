@@ -4,7 +4,7 @@
 	<ResearchProjectDef>
 		<defName>Research_LaserSteamGeyser_Drill</defName>
 		<label>Laser Steam Geyser Drill</label>
-		<description>Using a laser, drill into the steam and magma network deep within the planet.</description>
+		<description>Unlocks a Drilling Laser Targeting system that allows the creation or removal of steam vents. After research and construction, you will power the building while it conducts a subsurface scan. After the scan is complete, it can use a large amount of stored battery power to activate the laser of an orbiting satellite to drill or collapse a steam vent.</description>
 		<baseCost>4000</baseCost>
 		<techLevel>Industrial</techLevel>
 		<prerequisites>

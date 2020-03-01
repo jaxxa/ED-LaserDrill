@@ -11,6 +11,18 @@
 	<description>Version: 2.0.0.0
 Links to all my mods including non steam versions available at: https://github.com/jaxxa/JaxxaRimworldReleaseCollection/blob/master/README.md
 
-Adds a Laser Drill that allows the creation of new steam vents, and a Laser Filler that allows you to remove unwanted steam vents.
+As of 1.1 this now required EnhancedDevelopment Core to be installed.
+
+Adds a Drilling Laser Targeting system that allows the creation or removal of steam vents. After research and construction, you will power the building while it conducts a subsurface scan. After the scan is complete, it can use a large amount of stored battery power to activate the laser of an orbiting satellite to drill or collapse a steam vent.
 	</description>
+	<loadAfter>
+		<li>Jaxxa.EnhancedDevelopment.Core</li>
+    </loadAfter>
+	<modDependencies>
+	<li>
+		<packageId>Jaxxa.EnhancedDevelopment.Core</packageId>
+		<displayName>EnhancedDevelopment Core</displayName>
+		<steamWorkshopUrl>steam://url/CommunityFilePage/2010827164</steamWorkshopUrl>
+	</li>
+    </modDependencies>
 </ModMetaData>
