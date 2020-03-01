@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill", "ED-LaserDrill\ED-LaserDrill.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.0", "1.0\ED-LaserDrill_1.0.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.1", "1.1\ED-LaserDrill_1.1.csproj", "{37F117C5-A529-4B41-8768-33ADED0DDD85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B990CC4-40E4-4FF4-A70A-84DF0E4445AD}
 	EndGlobalSection
 EndGlobal
