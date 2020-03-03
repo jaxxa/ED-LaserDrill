@@ -40,7 +40,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
             _listing_Standard_RequiredDrillWork.ColumnWidth = 70;
             _listing_Standard_RequiredDrillWork.IntAdjuster(ref RequiredScanningTimeDays, 1, 1);
             _listing_Standard_RequiredDrillWork.NewColumn();
-            _listing_Standard_RequiredDrillWork.IntSetter(ref RequiredScanningTimeDays, 1, "Default");
+            _listing_Standard_RequiredDrillWork.IntSetter(ref RequiredScanningTimeDays, 10, "Default");
             _listing_Standard_RequiredDrillWork.End();
 
                        
