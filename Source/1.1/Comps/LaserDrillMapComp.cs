@@ -21,7 +21,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public override void MapComponentTick()
         {
-            if (!Settings.Mod_LaserDrill.Settings.AllowSimultaneousDrilling && 
+            if (!Settings.Mod_Laser_Drill.Settings.AllowSimultaneousDrilling && 
                 Find.TickManager.TicksGame % LaserDrillMapComp.CHECK_INTERVAL == 0)
             {
                 //Only allow the first Drill to Scan
