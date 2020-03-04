@@ -41,3 +41,7 @@ Aditional details can be fount in About.xml
  
 2.0.0.0
  * Rework and Update to Rimworld 1.1 and 1.0
+ 
+2.0.0.1
+ * Fix for error relating to old config files
+ * Fox for Default Days of work
