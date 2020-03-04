@@ -71,7 +71,7 @@
     <Compile Include="Things\LaserDrillVisual.cs" />
     <Compile Include="Comps\CompProperties_LaserDrill.cs" />
     <Compile Include="Comps\Comp_LaserDrill.cs" />
-    <Compile Include="Settings\Mod_LaserDrill.cs" />
+    <Compile Include="Settings\Mod_Laser_Drill.cs" />
     <Compile Include="Settings\ModSettings_LaserDrill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

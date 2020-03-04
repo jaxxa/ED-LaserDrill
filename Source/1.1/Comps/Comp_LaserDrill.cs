@@ -191,7 +191,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         private void SetRequiredDrillScanningToDefault()
         {
-            this.DrillScanningRemainingTicks = Settings.Mod_LaserDrill.Settings.RequiredScanningTimeDays * 60000;
+            this.DrillScanningRemainingTicks = Settings.Mod_Laser_Drill.Settings.RequiredScanningTimeDays * 60000;
         }
 
         public Thing FindClosestGeyser()

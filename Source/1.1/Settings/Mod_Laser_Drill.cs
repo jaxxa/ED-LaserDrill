@@ -7,14 +7,14 @@ using Verse;
 
 namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
 {
-        class Mod_LaserDrill : Verse.Mod
+        class Mod_Laser_Drill : Verse.Mod
         {
 
             public static ModSettings_LaserDrill Settings;
 
-            public Mod_LaserDrill(ModContentPack content) : base(content)
+            public Mod_Laser_Drill(ModContentPack content) : base(content)
             {
-            Mod_LaserDrill.Settings = GetSettings<ModSettings_LaserDrill>();
+            Mod_Laser_Drill.Settings = GetSettings<ModSettings_LaserDrill>();
             }
 
             public override string SettingsCategory()

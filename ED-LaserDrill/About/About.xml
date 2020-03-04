@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>ED-Laser-Drill</name>
-	<packageId>Jaxxa.ED.LaserDrill</packageId>
+	<packageId>Jaxxa.EnhancedDevelopment.LaserDrill</packageId>
 	<supportedVersions>
 		<li>1.0</li>
 		<li>1.1</li>
