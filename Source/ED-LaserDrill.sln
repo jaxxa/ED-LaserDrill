@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.0", "1.0\ED
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.1", "1.1\ED-LaserDrill_1.1.csproj", "{37F117C5-A529-4B41-8768-33ADED0DDD85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.2", "1.2\ED-LaserDrill_1.2.csproj", "{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
