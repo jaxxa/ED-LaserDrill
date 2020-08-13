@@ -40,11 +40,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             UI_LASER_ACTIVATE = ContentFinder<Texture2D>.Get("UI/Power/SteamGeyser", true);
             UI_LASER_ACTIVATEFILL = ContentFinder<Texture2D>.Get("UI/Power/RemoveSteamGeyser", true);
         }
-        
+
         #endregion Initilisation
 
         #region IRequiresShipResources
-        
+
         private bool HasSufficientShipResources()
         {
             return this.m_RequiresShipResourcesComp.Satisfied;
@@ -110,7 +110,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             //if (this.parent.Map != null && this.parent.Map.GetComponent<MapComp_LaserDrill>() != null)
 
             {
-                if(this.IsScanComplete())
+                if (this.IsScanComplete())
                 {
 
                     _StringBuilder.AppendLine("Scan complete");
@@ -121,7 +121,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                     {
                         _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
                     }
-                    else 
+                    else
                     {
                         _StringBuilder.AppendLine("Scanning Paused, Power Offline.");
                     }
@@ -143,37 +143,33 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 yield return g;
             }
-
-            if (this.IsScanComplete() & this.HasSufficientShipResources())
+                       
+            if (true)
             {
-
-
-                if (true)
-                {
-                    Command_Action act = new Command_Action();
-                    act.action = () => this.TriggerLaser();
-                    act.icon = UI_LASER_ACTIVATE;
-                    act.defaultLabel = "Activate Laser";
-                    act.defaultDesc = "Activate Laser";
-                    act.activateSound = SoundDef.Named("Click");
-                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                    //act.groupKey = 689736;
-                    yield return act;
-                }
-
-                if (true)
-                {
-                    Command_Action act = new Command_Action();
-                    act.action = () => this.TriggerLaserToFill();
-                    act.icon = UI_LASER_ACTIVATEFILL;
-                    act.defaultLabel = "Activate Laser Fill";
-                    act.defaultDesc = "Activate Laser Fill";
-                    act.activateSound = SoundDef.Named("Click");
-                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                    //act.groupKey = 689736;
-                    yield return act;
-                }
+                Command_Action act = new Command_Action();
+                act.action = () => this.TriggerLaser();
+                act.icon = UI_LASER_ACTIVATE;
+                act.defaultLabel = "Activate Laser";
+                act.defaultDesc = "Activate Laser";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
             }
+
+            if (true)
+            {
+                Command_Action act = new Command_Action();
+                act.action = () => this.TriggerLaserToFill();
+                act.icon = UI_LASER_ACTIVATEFILL;
+                act.defaultLabel = "Activate Laser Fill";
+                act.defaultDesc = "Activate Laser Fill";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
+            }
+                      
 
         } //CompGetGizmosExtra()
 
@@ -181,13 +177,45 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             map.GetComponent<LaserDrillMapComp>().Deregister(this);
             this.SetRequiredDrillScanningToDefault();
-            
+
             base.PostDeSpawn(map);
         }
-                
+
         #endregion Overrides
 
         #region Methods
+
+        private Boolean IsValidForActivation()
+        {
+            if (this.IsScanComplete() & this.HasSufficientShipResources())
+            {
+                return true;
+            }
+
+            StringBuilder _StringBuilder = new StringBuilder();
+            _StringBuilder.AppendLine("Laser Activation Failure:");
+
+            if (!this.IsScanComplete())
+            {
+                if(this.IsScanning())
+                {
+                    _StringBuilder.AppendLine(" * Scanning incomplete - Time Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
+                }
+                else
+                {
+                    _StringBuilder.AppendLine(" * Scanning paused - Time Remaining after resuming: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
+                }
+            }
+
+            if (!this.HasSufficientShipResources())
+            {
+                _StringBuilder.AppendLine(" * " + this.m_RequiresShipResourcesComp.StatusString);
+            }
+
+            Find.LetterStack.ReceiveLetter("Scann in progress", _StringBuilder.ToString(), LetterDefOf.NeutralEvent, new LookTargets(this.parent));
+
+            return false;
+        }
 
         private void SetRequiredDrillScanningToDefault()
         {
@@ -224,6 +252,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public void TriggerLaserToFill()
         {
+            if (!IsValidForActivation()) { return; }
             if (this.FindClosestGeyser() != null)
             {
                 //TODO JW: Remove Power from Comp
@@ -243,6 +272,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public void TriggerLaser()
         {
+            if (!IsValidForActivation()) { return; }
             this.ShowLaserVisually();
             GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
@@ -256,7 +286,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             IntVec3 _Position = IntVec3.FromVector3(new UnityEngine.Vector3(parent.Position.x, parent.Position.y, parent.Position.z - 2));
             LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), _Position, parent.Map, WipeMode.Vanish);
         }
-        
+
         private bool IsScanComplete()
         {
             return (this.DrillScanningRemainingTicks <= 0);

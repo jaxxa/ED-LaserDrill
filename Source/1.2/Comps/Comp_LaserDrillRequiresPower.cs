@@ -71,7 +71,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 }
                 else
                 {
-                    return "Insufficient Power stored for Drill Activation, needs 6,000 Wd.";
+                    return "Insufficient Power stored for Drill Activation, needs 6,000 Wd. Currently has " + Math.Floor(this.m_PowerComp.PowerNet.CurrentStoredEnergy()).ToString() + " Wd.";
 
                 }
             }
