@@ -211,8 +211,10 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 _StringBuilder.AppendLine(" * " + this.m_RequiresShipResourcesComp.StatusString);
             }
-
+                        
             Find.LetterStack.ReceiveLetter("Scann in progress", _StringBuilder.ToString(), LetterDefOf.NeutralEvent, new LookTargets(this.parent));
+
+            Messages.Message(_StringBuilder.ToString(), MessageTypeDefOf.NegativeEvent);
 
             return false;
         }
