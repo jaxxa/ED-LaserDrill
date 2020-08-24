@@ -44,4 +44,12 @@ Aditional details can be fount in About.xml
  
 2.0.0.1
  * Fix for error relating to old config files
- * Fox for Default Days of work
+ * Fix for Default Days of work
+ 
+2.1.0.0
+ * Update to 1.2
+ * Lasers now can be targeting anywhere on the map.
+
+
+
+

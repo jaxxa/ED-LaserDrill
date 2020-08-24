@@ -143,7 +143,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 yield return g;
             }
-                       
+
             if (true)
             {
                 Command_Action act = new Command_Action();
@@ -169,7 +169,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 //act.groupKey = 689736;
                 yield return act;
             }
-                      
+
 
         } //CompGetGizmosExtra()
 
@@ -197,7 +197,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
             if (!this.IsScanComplete())
             {
-                if(this.IsScanning())
+                if (this.IsScanning())
                 {
                     _StringBuilder.AppendLine(" * Scanning incomplete - Time Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
                 }
@@ -211,7 +211,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             {
                 _StringBuilder.AppendLine(" * " + this.m_RequiresShipResourcesComp.StatusString);
             }
-                        
+
             Find.LetterStack.ReceiveLetter("Scann in progress", _StringBuilder.ToString(), LetterDefOf.NeutralEvent, new LookTargets(this.parent));
 
             Messages.Message(_StringBuilder.ToString(), MessageTypeDefOf.NegativeEvent);
@@ -224,7 +224,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             this.DrillScanningRemainingTicks = Settings.Mod_Laser_Drill.Settings.RequiredScanningTimeDays * 60000;
         }
 
-        public Thing FindClosestGeyser()
+        public Thing FindClosestGeyserToPoint(IntVec3 location)
         {
             List<Thing> steamGeyser = this.parent.Map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
             Thing currentLowestGeyser = null;
@@ -236,13 +236,12 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 //if (currentGuyser.SpawnedInWorld)
                 if (currentGuyser.Spawned)
                 {
-                    if (this.parent.Position.InHorDistOf(currentGuyser.Position, 5))
+                    if (location.InHorDistOf(currentGuyser.Position, 5))
                     {
-                        double distance = Math.Sqrt(Math.Pow((this.parent.Position.x - currentGuyser.Position.x), 2) + Math.Pow((this.parent.Position.y - currentGuyser.Position.y), 2));
+                        double distance = Math.Sqrt(Math.Pow((location.x - currentGuyser.Position.x), 2) + Math.Pow((location.y - currentGuyser.Position.y), 2));
 
                         if (distance < lowestDistance)
                         {
-
                             lowestDistance = distance;
                             currentLowestGeyser = currentGuyser;
                         }
@@ -254,39 +253,61 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public void TriggerLaserToFill()
         {
-            if (!IsValidForActivation()) { return; }
-            if (this.FindClosestGeyser() != null)
+
+            TargetingParameters targetingParams = new TargetingParameters() { canTargetLocations = true };
+            Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
             {
-                //TODO JW: Remove Power from Comp
-                this.ShowLaserVisually();
-                this.FindClosestGeyser().DeSpawn();
+                IntVec3 _LocationCell = new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
+                                             
+                if (!IsValidForActivation()) { return; }
+
+                var _ClosestGyser = this.FindClosestGeyserToPoint(_LocationCell);
+
+                if (_ClosestGyser != null)
+                {
+                    //TODO JW: Remove Power from Comp
+                    this.ShowLaserVisually(_ClosestGyser.Position);
+                    _ClosestGyser.DeSpawn();
 
 
-                this.m_RequiresShipResourcesComp.UseResources();
-                Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
-                this.parent.Destroy(DestroyMode.Vanish);
-            }
-            else
-            {
-                Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.NegativeEvent);
-            }
+                    this.m_RequiresShipResourcesComp.UseResources();
+                    Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
+                    this.parent.Destroy(DestroyMode.Vanish);
+                }
+                else
+                {
+                    Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.NegativeEvent);
+                }
+            }, null, null, null);
+
+
         }
 
         public void TriggerLaser()
         {
-            if (!IsValidForActivation()) { return; }
-            this.ShowLaserVisually();
-            GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
-            this.m_RequiresShipResourcesComp.UseResources();
-            Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
-            this.parent.Destroy(DestroyMode.Vanish);
+            TargetingParameters targetingParams = new TargetingParameters() { canTargetLocations = true };
+            
+            Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
+            {
+                IntVec3 _LocationCell =  new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
+
+                if (!IsValidForActivation()) { return; }
+                this.ShowLaserVisually(_LocationCell);
+                
+                GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), _LocationCell, this.parent.Map);
+
+                this.m_RequiresShipResourcesComp.UseResources();
+                Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
+                this.parent.Destroy(DestroyMode.Vanish);
+                
+            }, null, null, null);
+
         }
 
-        private void ShowLaserVisually()
+        private void ShowLaserVisually(IntVec3 position)
         {
-            IntVec3 _Position = IntVec3.FromVector3(new UnityEngine.Vector3(parent.Position.x, parent.Position.y, parent.Position.z - 2));
-            LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), _Position, parent.Map, WipeMode.Vanish);
+            LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), position, parent.Map, WipeMode.Vanish);
         }
 
         private bool IsScanComplete()
