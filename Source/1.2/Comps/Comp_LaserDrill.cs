@@ -258,7 +258,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
             {
                 IntVec3 _LocationCell = new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
-                                             
+
                 if (!IsValidForActivation()) { return; }
 
                 var _ClosestGyser = this.FindClosestGeyserToPoint(_LocationCell);
@@ -278,8 +278,13 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 {
                     Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.NegativeEvent);
                 }
-            }, null, null, null);
+            }, delegate (LocalTargetInfo target)
+            {
+                //Highlght action
 
+                GenDraw.DrawRadiusRing(target.Cell, 5.0f);
+
+            },null, null, null);
 
         }
 
@@ -287,20 +292,29 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
 
             TargetingParameters targetingParams = new TargetingParameters() { canTargetLocations = true };
-            
+
             Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
             {
-                IntVec3 _LocationCell =  new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
+                IntVec3 _LocationCell = new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
 
                 if (!IsValidForActivation()) { return; }
                 this.ShowLaserVisually(_LocationCell);
-                
+
                 GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), _LocationCell, this.parent.Map);
 
                 this.m_RequiresShipResourcesComp.UseResources();
                 Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
                 this.parent.Destroy(DestroyMode.Vanish);
-                
+
+            }, delegate (LocalTargetInfo target)
+            {
+                //Highlght action
+
+                GenDraw.DrawRadiusRing(target.Cell, 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x + 1, target.Cell.y, target.Cell.z), 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z + 1), 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x + 1, target.Cell.y, target.Cell.z + 1), 0.1f);
+
             }, null, null, null);
 
         }
