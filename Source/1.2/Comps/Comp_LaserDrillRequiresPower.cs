@@ -19,10 +19,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            //this._FlickComp = this.parent.GetComp<CompFlickable>();
-           // this.Properties = this.props as CompProperties_LaserDrill;
             this.m_PowerComp = parent.TryGetComp<CompPowerTrader>();
-
 
         }
                
@@ -33,24 +30,24 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public bool UseResources()
         {
-
             if (!this.HasEnoughEnergy())
             {
                 return false;
             }
 
-            float _EnergtLeftToDrain = this.m_RequiredEnergy;
+            float _EnergyLeftToDrain = this.m_RequiredEnergy;
 
             for (int i = 0; i < this.m_PowerComp.PowerNet.batteryComps.Count; i++)
             {
                 CompPowerBattery compPowerBattery = this.m_PowerComp.PowerNet.batteryComps[i];
-                float _DrainThisTime = Math.Min(_EnergtLeftToDrain, compPowerBattery.StoredEnergy);
+                float _DrainThisTime = Math.Min(_EnergyLeftToDrain, compPowerBattery.StoredEnergy);
 
-                _DrainThisTime -= _DrainThisTime;
+                _EnergyLeftToDrain -= _DrainThisTime;
                 compPowerBattery.DrawPower(_DrainThisTime);
             }
 
             return true;
+
         }
 
         bool IRequiresShipResources.Satisfied

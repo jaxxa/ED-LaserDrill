@@ -226,10 +226,8 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             if (this.FindClosestGeyser() != null)
             {
-                //TODO JW: Remove Power from Comp
                 this.ShowLaserVisually();
                 this.FindClosestGeyser().DeSpawn();
-
 
                 this.m_RequiresShipResourcesComp.UseResources();
                 Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);

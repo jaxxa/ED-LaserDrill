@@ -265,7 +265,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
                 if (_ClosestGyser != null)
                 {
-                    //TODO JW: Remove Power from Comp
                     this.ShowLaserVisually(_ClosestGyser.Position);
                     _ClosestGyser.DeSpawn();
 
