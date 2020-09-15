@@ -170,6 +170,22 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 yield return act;
             }
 
+            if (DebugSettings.godMode)
+            {
+                Command_Action act = new Command_Action();
+                act.action = () =>
+                {
+                    //60,000 is 1 day
+                    this.DrillScanningRemainingTicks -= 30000;
+                };
+                //act.icon = UI_LASER_ACTIVATEFILL;
+                act.defaultLabel = "Debug: Progress Scann";
+                act.defaultDesc = "Debug: Progress Scann";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
+            }
 
         } //CompGetGizmosExtra()
 
