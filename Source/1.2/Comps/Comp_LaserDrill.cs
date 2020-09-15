@@ -40,11 +40,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             UI_LASER_ACTIVATE = ContentFinder<Texture2D>.Get("UI/Power/SteamGeyser", true);
             UI_LASER_ACTIVATEFILL = ContentFinder<Texture2D>.Get("UI/Power/RemoveSteamGeyser", true);
         }
-        
+
         #endregion Initilisation
 
         #region IRequiresShipResources
-        
+
         private bool HasSufficientShipResources()
         {
             return this.m_RequiresShipResourcesComp.Satisfied;
@@ -110,7 +110,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             //if (this.parent.Map != null && this.parent.Map.GetComponent<MapComp_LaserDrill>() != null)
 
             {
-                if(this.IsScanComplete())
+                if (this.IsScanComplete())
                 {
 
                     _StringBuilder.AppendLine("Scan complete");
@@ -121,7 +121,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                     {
                         _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
                     }
-                    else 
+                    else
                     {
                         _StringBuilder.AppendLine("Scanning Paused, Power Offline.");
                     }
@@ -144,35 +144,47 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 yield return g;
             }
 
-            if (this.IsScanComplete() & this.HasSufficientShipResources())
+            if (true)
             {
+                Command_Action act = new Command_Action();
+                act.action = () => this.TriggerLaser();
+                act.icon = UI_LASER_ACTIVATE;
+                act.defaultLabel = "Activate Laser";
+                act.defaultDesc = "Activate Laser";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
+            }
 
+            if (true)
+            {
+                Command_Action act = new Command_Action();
+                act.action = () => this.TriggerLaserToFill();
+                act.icon = UI_LASER_ACTIVATEFILL;
+                act.defaultLabel = "Activate Laser Fill";
+                act.defaultDesc = "Activate Laser Fill";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
+            }
 
-                if (true)
+            if (DebugSettings.godMode)
+            {
+                Command_Action act = new Command_Action();
+                act.action = () =>
                 {
-                    Command_Action act = new Command_Action();
-                    act.action = () => this.TriggerLaser();
-                    act.icon = UI_LASER_ACTIVATE;
-                    act.defaultLabel = "Activate Laser";
-                    act.defaultDesc = "Activate Laser";
-                    act.activateSound = SoundDef.Named("Click");
-                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                    //act.groupKey = 689736;
-                    yield return act;
-                }
-
-                if (true)
-                {
-                    Command_Action act = new Command_Action();
-                    act.action = () => this.TriggerLaserToFill();
-                    act.icon = UI_LASER_ACTIVATEFILL;
-                    act.defaultLabel = "Activate Laser Fill";
-                    act.defaultDesc = "Activate Laser Fill";
-                    act.activateSound = SoundDef.Named("Click");
-                    //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
-                    //act.groupKey = 689736;
-                    yield return act;
-                }
+                    //60,000 is 1 day
+                    this.DrillScanningRemainingTicks -= 30000;
+                };
+                //act.icon = UI_LASER_ACTIVATEFILL;
+                act.defaultLabel = "Debug: Progress Scann";
+                act.defaultDesc = "Debug: Progress Scann";
+                act.activateSound = SoundDef.Named("Click");
+                //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
+                //act.groupKey = 689736;
+                yield return act;
             }
 
         } //CompGetGizmosExtra()
@@ -181,20 +193,54 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         {
             map.GetComponent<LaserDrillMapComp>().Deregister(this);
             this.SetRequiredDrillScanningToDefault();
-            
+
             base.PostDeSpawn(map);
         }
-                
+
         #endregion Overrides
 
         #region Methods
+
+        private Boolean IsValidForActivation()
+        {
+            if (this.IsScanComplete() & this.HasSufficientShipResources())
+            {
+                return true;
+            }
+
+            StringBuilder _StringBuilder = new StringBuilder();
+            _StringBuilder.AppendLine("Laser Activation Failure:");
+
+            if (!this.IsScanComplete())
+            {
+                if (this.IsScanning())
+                {
+                    _StringBuilder.AppendLine(" * Scanning incomplete - Time Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
+                }
+                else
+                {
+                    _StringBuilder.AppendLine(" * Scanning paused - Time Remaining after resuming: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
+                }
+            }
+
+            if (!this.HasSufficientShipResources())
+            {
+                _StringBuilder.AppendLine(" * " + this.m_RequiresShipResourcesComp.StatusString);
+            }
+
+            Find.LetterStack.ReceiveLetter("Scann in progress", _StringBuilder.ToString(), LetterDefOf.NeutralEvent, new LookTargets(this.parent));
+
+            Messages.Message(_StringBuilder.ToString(), MessageTypeDefOf.NegativeEvent);
+
+            return false;
+        }
 
         private void SetRequiredDrillScanningToDefault()
         {
             this.DrillScanningRemainingTicks = Settings.Mod_Laser_Drill.Settings.RequiredScanningTimeDays * 60000;
         }
 
-        public Thing FindClosestGeyser()
+        public Thing FindClosestGeyserToPoint(IntVec3 location)
         {
             List<Thing> steamGeyser = this.parent.Map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
             Thing currentLowestGeyser = null;
@@ -206,13 +252,12 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 //if (currentGuyser.SpawnedInWorld)
                 if (currentGuyser.Spawned)
                 {
-                    if (this.parent.Position.InHorDistOf(currentGuyser.Position, 5))
+                    if (location.InHorDistOf(currentGuyser.Position, 5))
                     {
-                        double distance = Math.Sqrt(Math.Pow((this.parent.Position.x - currentGuyser.Position.x), 2) + Math.Pow((this.parent.Position.y - currentGuyser.Position.y), 2));
+                        double distance = Math.Sqrt(Math.Pow((location.x - currentGuyser.Position.x), 2) + Math.Pow((location.y - currentGuyser.Position.y), 2));
 
                         if (distance < lowestDistance)
                         {
-
                             lowestDistance = distance;
                             currentLowestGeyser = currentGuyser;
                         }
@@ -224,37 +269,76 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public void TriggerLaserToFill()
         {
-            if (this.FindClosestGeyser() != null)
-            {
-                this.ShowLaserVisually();
-                this.FindClosestGeyser().DeSpawn();
 
-                this.m_RequiresShipResourcesComp.UseResources();
-                Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
-                this.parent.Destroy(DestroyMode.Vanish);
-            }
-            else
+            TargetingParameters targetingParams = new TargetingParameters() { canTargetLocations = true };
+            Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
             {
-                Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.NegativeEvent);
-            }
+                IntVec3 _LocationCell = new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
+
+                if (!IsValidForActivation()) { return; }
+
+                var _ClosestGyser = this.FindClosestGeyserToPoint(_LocationCell);
+
+                if (_ClosestGyser != null)
+                {
+                    this.ShowLaserVisually(_ClosestGyser.Position);
+                    _ClosestGyser.DeSpawn();
+
+
+                    this.m_RequiresShipResourcesComp.UseResources();
+                    Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
+                    this.parent.Destroy(DestroyMode.Vanish);
+                }
+                else
+                {
+                    Messages.Message("SteamGeyser not found to Remove.", MessageTypeDefOf.NegativeEvent);
+                }
+            }, delegate (LocalTargetInfo target)
+            {
+                //Highlght action
+
+                GenDraw.DrawRadiusRing(target.Cell, 5.0f);
+
+            },null, null, null);
+
         }
 
         public void TriggerLaser()
         {
-            this.ShowLaserVisually();
-            GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), this.parent.Position, this.parent.Map);
 
-            this.m_RequiresShipResourcesComp.UseResources();
-            Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
-            this.parent.Destroy(DestroyMode.Vanish);
+            TargetingParameters targetingParams = new TargetingParameters() { canTargetLocations = true };
+
+            Find.Targeter.BeginTargeting(targetingParams, delegate (LocalTargetInfo target)
+            {
+                IntVec3 _LocationCell = new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z);
+
+                if (!IsValidForActivation()) { return; }
+                this.ShowLaserVisually(_LocationCell);
+
+                GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), _LocationCell, this.parent.Map);
+
+                this.m_RequiresShipResourcesComp.UseResources();
+                Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
+                this.parent.Destroy(DestroyMode.Vanish);
+
+            }, delegate (LocalTargetInfo target)
+            {
+                //Highlght action
+
+                GenDraw.DrawRadiusRing(target.Cell, 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x + 1, target.Cell.y, target.Cell.z), 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x, target.Cell.y, target.Cell.z + 1), 0.1f);
+                GenDraw.DrawRadiusRing(new IntVec3(target.Cell.x + 1, target.Cell.y, target.Cell.z + 1), 0.1f);
+
+            }, null, null, null);
+
         }
 
-        private void ShowLaserVisually()
+        private void ShowLaserVisually(IntVec3 position)
         {
-            IntVec3 _Position = IntVec3.FromVector3(new UnityEngine.Vector3(parent.Position.x, parent.Position.y, parent.Position.z - 2));
-            LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), _Position, parent.Map, WipeMode.Vanish);
+            LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), position, parent.Map, WipeMode.Vanish);
         }
-        
+
         private bool IsScanComplete()
         {
             return (this.DrillScanningRemainingTicks <= 0);

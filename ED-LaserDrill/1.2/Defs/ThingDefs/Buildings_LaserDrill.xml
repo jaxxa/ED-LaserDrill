@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!--================================ Lasers ======================================-->
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>LaserDrill</defName>
+		<label>Laser Drill Tageting</label>
+		<thingClass>Building</thingClass>
+		<graphicData>
+			<texPath>Things/Buildings/LaserDrill</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(6,6)</drawSize>
+		</graphicData>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>Impassable</passability>
+		<castEdgeShadows>true</castEdgeShadows>
+		<fillPercent>1</fillPercent>
+		<tickerType>Rare</tickerType>
+		<statBases>
+			<WorkToBuild>1800</WorkToBuild>
+			<MaxHitPoints>350</MaxHitPoints>
+			<Flammability>1.0</Flammability>
+			<Mass>100</Mass>
+		</statBases>
+		<description>Conducts a detailed subsurface scan to allow the precise direction of orbiting laser systems to create or destroy a steam geyser. After the scan is complete, it can use a large amount of stored battery power to activate the laser of an orbiting satellite to drill or collapse a steam vent. Warning, the intense heat from the weapon system has been known to start fires.</description>
+		<building>
+			<wantsHopperAdjacent>false</wantsHopperAdjacent>
+		</building>
+		<comps>
+			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill"/>
+			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrillRequiresPower"/>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>1000</basePowerConsumption>
+			</li>
+			<li Class="CompProperties_Flickable"/>
+		</comps>
+		<size>(6,6)</size>
+		<costList>
+			<ComponentSpacer>10</ComponentSpacer>
+			<Steel>600</Steel>
+		</costList>
+		<hasInteractionCell>False</hasInteractionCell>
+		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+		<designationCategory>Power</designationCategory>
+		<staticSunShadowHeight>0.75</staticSunShadowHeight>
+		<researchPrerequisites>
+			<li>Research_LaserSteamGeyser_Drill</li>
+		</researchPrerequisites>
+	</ThingDef>
+
+	<ThingDef Name="LaserDrillVisual" ParentName="EtherealThingBase">
+		<thingClass>Jaxxa.EnhancedDevelopment.LaserDrill.Things.LaserDrillVisual</thingClass>
+		<defName>LaserDrillVisual</defName>
+		<label>LaserDrillVisual</label>
+		<tickerType>Normal</tickerType>
+		<drawerType>RealtimeOnly</drawerType>
+		<drawOffscreen>true</drawOffscreen>
+		<seeThroughFog>true</seeThroughFog>
+		<comps>
+			<li Class="CompProperties_AffectsSky">
+				<skyColors>
+					<sky>(255, 230, 200)</sky>
+					<shadow>(225, 220, 185)</shadow>
+					<overlay>(255, 255, 255)</overlay>
+					<saturation>1.3</saturation>
+				</skyColors>
+			</li>
+			<li Class="CompProperties_OrbitalBeam">
+				<width>8</width>
+				<color>(255, 245, 214, 242)</color>
+				<sound>OrbitalBeam</sound>
+			</li>
+		</comps>
+	</ThingDef>
+
+
+</Defs>
