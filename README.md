@@ -50,6 +50,8 @@ Aditional details can be fount in About.xml
  * Update to 1.2
  * Lasers now can be targeting anywhere on the map.
 
-
+1.3.0.0
+ * Update for Rimworld 1.3
+ * The Numbering scheme has been changed, mostly to back to what it was, the first two will match the version of Rimworld it was built for, then the next two will be major and minor versions of the mod.
 
 
