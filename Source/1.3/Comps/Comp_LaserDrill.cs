@@ -1,5 +1,4 @@
-﻿using Jaxxa.EnhancedDevelopment.Core.Comp.Interface;
-using Jaxxa.EnhancedDevelopment.LaserDrill.Things;
+﻿using Jaxxa.EnhancedDevelopment.LaserDrill.Things;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         private CompPowerTrader m_PowerComp;
         private CompFlickable m_FlickComp;
 
-        private IRequiresShipResources m_RequiresShipResourcesComp;
+        private int m_RequiredEnergy = 6000;
 
         #endregion Variables
 
@@ -43,15 +42,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         #endregion Initilisation
 
-        #region IRequiresShipResources
-
-        private bool HasSufficientShipResources()
-        {
-            return this.m_RequiresShipResourcesComp.Satisfied;
-        }
-
-        #endregion
-
         #region Overrides
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
@@ -60,18 +50,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             this.m_FlickComp = this.parent.GetComp<CompFlickable>();
             this.Properties = this.props as CompProperties_LaserDrill;
             this.m_PowerComp = parent.TryGetComp<CompPowerTrader>();
-
-            //Add IRequiresShipResources Comp
-            var _Comp = this.parent.GetComps<ThingComp>().FirstOrDefault(x => x is IRequiresShipResources);
-            var _ResourcesCompInterface = _Comp as IRequiresShipResources;
-            if (_ResourcesCompInterface == null)
-            {
-                Log.Error(nameof(Comp_LaserDrill) + " Failed to get Comp With " + nameof(IRequiresShipResources));
-            }
-            else
-            {
-                this.m_RequiresShipResourcesComp = _ResourcesCompInterface;
-            }
 
 
             if (!respawningAfterLoad)
@@ -109,26 +87,38 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
             //if (this.parent.Map != null && this.parent.Map.GetComponent<MapComp_LaserDrill>() != null)
 
-            {
-                if (this.IsScanComplete())
-                {
 
-                    _StringBuilder.AppendLine("Scan complete");
+            if (this.IsScanComplete())
+            {
+                _StringBuilder.AppendLine("Scan complete");
+            }
+            else
+            {
+                if (this.HasPowerToScan())
+                {
+                    _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
                 }
                 else
                 {
-                    if (this.HasPowerToScan())
-                    {
-                        _StringBuilder.AppendLine("Scanning in Progress - Remaining: " + this.DrillScanningRemainingTicks.ToStringTicksToPeriod());
-                    }
-                    else
-                    {
-                        _StringBuilder.AppendLine("Scanning Paused, Power Offline.");
-                    }
+                    _StringBuilder.AppendLine("Scanning Paused, Power Offline.");
                 }
+            }
 
-                _StringBuilder.Append(this.m_RequiresShipResourcesComp.StatusString);
+            if (this.HasEnoughEnergyToActivate())
+            {
+                _StringBuilder.Append("Sufficient Power for Drill Activation, ready to use 6,000 Wd.");
+            }
+            else
+            {
+                if (this.m_PowerComp.PowerNet != null)
+                {
 
+                    _StringBuilder.Append("Insufficient Power stored for Drill Activation, needs 6,000 Wd. Currently has " + Math.Floor(this.m_PowerComp.PowerNet.CurrentStoredEnergy()).ToString() + " Wd.");
+                }
+                else
+                {
+                    _StringBuilder.Append("No Power Net");
+                }
             }
 
             return _StringBuilder.ToString();
@@ -203,7 +193,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         private Boolean IsValidForActivation()
         {
-            if (this.IsScanComplete() & this.HasSufficientShipResources())
+            if (this.IsScanComplete() & this.HasEnoughEnergyToActivate())
             {
                 return true;
             }
@@ -223,9 +213,13 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 }
             }
 
-            if (!this.HasSufficientShipResources())
+            if (this.HasEnoughEnergyToActivate())
             {
-                _StringBuilder.AppendLine(" * " + this.m_RequiresShipResourcesComp.StatusString);
+                _StringBuilder.AppendLine("Sufficient Power for Drill Activation, ready to use 6,000 Wd.");
+            }
+            else
+            {
+                _StringBuilder.AppendLine("Insufficient Power stored for Drill Activation, needs 6,000 Wd. Currently has " + Math.Floor(this.m_PowerComp.PowerNet.CurrentStoredEnergy()).ToString() + " Wd.");
             }
 
             Find.LetterStack.ReceiveLetter("Scann in progress", _StringBuilder.ToString(), LetterDefOf.NeutralEvent, new LookTargets(this.parent));
@@ -284,8 +278,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                     this.ShowLaserVisually(_ClosestGyser.Position);
                     _ClosestGyser.DeSpawn();
 
-
-                    this.m_RequiresShipResourcesComp.UseResources();
                     Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
                     this.parent.Destroy(DestroyMode.Vanish);
                 }
@@ -299,7 +291,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
                 GenDraw.DrawRadiusRing(target.Cell, 5.0f);
 
-            },null, null, null);
+            }, null, null, null);
 
         }
 
@@ -317,8 +309,8 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
                 GenSpawn.Spawn(ThingDef.Named("SteamGeyser"), _LocationCell, this.parent.Map);
 
-                this.m_RequiresShipResourcesComp.UseResources();
                 Messages.Message("SteamGeyser Created.", MessageTypeDefOf.TaskCompletion);
+                this.UseStoredPower();
                 this.parent.Destroy(DestroyMode.Vanish);
 
             }, delegate (LocalTargetInfo target)
@@ -372,6 +364,33 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 Messages.Message("Drill Shutdown, Multiple Drills Scanning at once will cause interference.", this.parent, MessageTypeDefOf.RejectInput);
 
             }
+        }
+
+        private bool HasEnoughEnergyToActivate()
+        {
+            return this.m_PowerComp?.PowerNet?.CurrentStoredEnergy() >= this.m_RequiredEnergy;
+        }
+
+        public bool UseStoredPower()
+        {
+            if (!this.HasEnoughEnergyToActivate())
+            {
+                return false;
+            }
+
+            float _EnergyLeftToDrain = this.m_RequiredEnergy;
+
+            for (int i = 0; i < this.m_PowerComp.PowerNet.batteryComps.Count; i++)
+            {
+                CompPowerBattery compPowerBattery = this.m_PowerComp.PowerNet.batteryComps[i];
+                float _DrainThisTime = Math.Min(_EnergyLeftToDrain, compPowerBattery.StoredEnergy);
+
+                _EnergyLeftToDrain -= _DrainThisTime;
+                compPowerBattery.DrawPower(_DrainThisTime);
+            }
+
+            return true;
+
         }
 
         #endregion

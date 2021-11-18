@@ -29,7 +29,6 @@
 		</building>
 		<comps>
 			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrill"/>
-			<li Class="Jaxxa.EnhancedDevelopment.LaserDrill.Comps.CompProperties_LaserDrillRequiresPower"/>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
 				<basePowerConsumption>1000</basePowerConsumption>

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jaxxa.EnhancedDevelopment.Core.Comp.Interface;
 using RimWorld;
 using Verse;
 
 namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 {
-    class Comp_LaserDrillRequiresPower : ThingComp, Jaxxa.EnhancedDevelopment.Core.Comp.Interface.IRequiresShipResources
+    class Comp_LaserDrillRequiresPower : ThingComp
     {
 
         private CompPowerTrader m_PowerComp;
@@ -28,29 +27,9 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             return this.m_PowerComp?.PowerNet?.CurrentStoredEnergy() >= this.m_RequiredEnergy;
         }
 
-        public bool UseResources()
-        {
-            if (!this.HasEnoughEnergy())
-            {
-                return false;
-            }
 
-            float _EnergyLeftToDrain = this.m_RequiredEnergy;
 
-            for (int i = 0; i < this.m_PowerComp.PowerNet.batteryComps.Count; i++)
-            {
-                CompPowerBattery compPowerBattery = this.m_PowerComp.PowerNet.batteryComps[i];
-                float _DrainThisTime = Math.Min(_EnergyLeftToDrain, compPowerBattery.StoredEnergy);
-
-                _EnergyLeftToDrain -= _DrainThisTime;
-                compPowerBattery.DrawPower(_DrainThisTime);
-            }
-
-            return true;
-
-        }
-
-        bool IRequiresShipResources.Satisfied
+        bool Satisfied
         {
             get
             {
@@ -58,7 +37,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
             }
         }
 
-        string IRequiresShipResources.StatusString
+        string StatusString
         {
             get
             {

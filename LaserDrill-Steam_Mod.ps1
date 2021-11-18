@@ -9,4 +9,4 @@ Remove-Item -Path $ModDestination -Recurse
 
 Copy-Item -Path $ModSource -Destination $ModDestination -Recurse
 
-start -FilePath $ExePath -ArgumentList "-savedatafolder=C:\~Git\RimworldSaves_1.1\ModTest"
+start -FilePath $ExePath -ArgumentList "-savedatafolder=C:\~Git\RimworldSaves_1.3\ModTest"
