@@ -57,7 +57,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
                 this.SetRequiredDrillScanningToDefault();
             }
 
-            parent.Map.GetComponent<LaserDrillMapComp>().Register(this);
         }
 
         public override void PostExposeData()
@@ -181,7 +180,6 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
         public override void PostDeSpawn(Map map)
         {
-            map.GetComponent<LaserDrillMapComp>().Deregister(this);
             this.SetRequiredDrillScanningToDefault();
 
             base.PostDeSpawn(map);

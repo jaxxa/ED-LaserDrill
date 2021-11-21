@@ -12,16 +12,12 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
 
         //Fields
         public int RequiredScanningTimeDays = 10;
-        public bool AllowSimultaneousDrilling = false;
-
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            Scribe_Values.Look<int>(ref RequiredScanningTimeDays, "RequiredScanningTimeDays", 10, true);
-            Scribe_Values.Look<bool>(ref AllowSimultaneousDrilling, "AllowSimultaneousDrilling", false, true);
-            
+            Scribe_Values.Look<int>(ref RequiredScanningTimeDays, "RequiredScanningTimeDays", 10, true);            
         }
 
 
@@ -42,18 +38,9 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Settings
             _listing_Standard_RequiredDrillWork.NewColumn();
             _listing_Standard_RequiredDrillWork.IntSetter(ref RequiredScanningTimeDays, 10, "Default");
             _listing_Standard_RequiredDrillWork.End();
-
-                       
+                               
             listing_Standard.GapLine(12f);
-
-
-            listing_Standard.Label("Allow Simultaneous Drilling:");
-            listing_Standard.Gap(12f);
-            listing_Standard.CheckboxLabeled("Allow Simultaneous Drilling", ref AllowSimultaneousDrilling, "True if you want to allow Multiple Drills at once.");
-            listing_Standard.GapLine(12f);
-
-
-
+                        
             listing_Standard.End();
 
 
