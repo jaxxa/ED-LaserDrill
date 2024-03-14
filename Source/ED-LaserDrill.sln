@@ -1,32 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29503.13
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.0", "1.0\ED-LaserDrill_1.0.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.1", "1.1\ED-LaserDrill_1.1.csproj", "{37F117C5-A529-4B41-8768-33ADED0DDD85}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill_1.2", "1.2\ED-LaserDrill_1.2.csproj", "{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ED-LaserDrill", "ED-LaserDrill.csproj", "{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Release v1.2|Any CPU = Release v1.2|Any CPU
+		Release v1.3|Any CPU = Release v1.3|Any CPU
+		Release v1.4|Any CPU = Release v1.4|Any CPU
+		Release v1.5|Any CPU = Release v1.5|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37F117C5-A529-4B41-8768-33ADED0DDD85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2E7879F-45FE-47B6-8FE7-87D7E11AD96F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.2|Any CPU.ActiveCfg = Release v1.2|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.2|Any CPU.Build.0 = Release v1.2|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.3|Any CPU.ActiveCfg = Release v1.3|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.3|Any CPU.Build.0 = Release v1.3|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.4|Any CPU.ActiveCfg = Release v1.4|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.4|Any CPU.Build.0 = Release v1.4|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.5|Any CPU.ActiveCfg = Release v1.5|Any CPU
+		{3BA81339-B51E-41B8-82F5-A8BC2F3CBD8F}.Release v1.5|Any CPU.Build.0 = Release v1.5|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

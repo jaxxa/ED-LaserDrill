@@ -37,6 +37,8 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Things
 
         private int StartTick;
 
+        public Thing LaserDrill;
+
         #endregion
 
         #region Override Methods
@@ -52,7 +54,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Things
             this.GetComp<CompAffectsSky>().StartFadeInHoldFadeOut(30, this.Duration - 30 - 15, 15, 1f);
             this.GetComp<CompOrbitalBeam>().StartAnimation(this.Duration, 10, this.Angle);
 
-            MoteMaker.MakeBombardmentMote(this.Position, this.Map);
+            #if RIMWORLD12
+            MoteMaker.MakeBombardmentMote_NewTmp(this.Position, this.Map, 1f);
+            #else
+            MoteMaker.MakeBombardmentMote(this.Position, this.Map, 1f);
+            #endif
             MoteMaker.MakePowerBeamMote(this.Position, this.Map);
         }
 
@@ -82,10 +88,12 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Things
             Scribe_Values.Look<int>(ref this.StartTick, "StartTick", 0, false);
         }
 
+        #if !RIMWORLD15
         public override void Draw()
         {
             base.Comps_PostDraw();
         }
+        #endif
 
         #endregion
 
@@ -96,7 +104,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Things
             IntVec3 c = (from x in GenRadial.RadialCellsAround(base.Position, 25f, true)
                          where x.InBounds(base.Map)
                          select x).RandomElementByWeight((IntVec3 x) => LaserDrillVisual.DistanceChanceFactor.Evaluate(x.DistanceTo(base.Position)));
+            #if !RIMWORLD15
             FireUtility.TryStartFireIn(c, base.Map, Rand.Range(0.1f, 0.925f));
+            #else
+            FireUtility.TryStartFireIn(c, base.Map, Rand.Range(0.1f, 0.925f), this.LaserDrill);
+            #endif
         }
 
         #endregion
