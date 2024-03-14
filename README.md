@@ -50,9 +50,12 @@ Aditional details can be fount in About.xml
  * Update to 1.2
  * Lasers now can be targeting anywhere on the map.
 
-2.2.0.0
+---- HopeSeekr forked the project ----
+
+**v2.2.0: 2023-03-13**
  * Updated to Rimworld v1.3.
  * Updated to Rimworld v1.4.
 
-
+**v2.3.0: 2023-03-14**
+ * Updated to Rimworld v1.5.
 

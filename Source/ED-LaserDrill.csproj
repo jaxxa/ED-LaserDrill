@@ -32,6 +32,11 @@
     <OutputPath>/rimworld/1.4/Mods/ED-LaserDrill/1.4/Assemblies</OutputPath>
     <MainPath>/rimworld/1.2/Mods/ED-LaserDrill/1.4/Assemblies</MainPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.5|AnyCPU' ">
+    <DefineConstants>RIMWORLD15</DefineConstants>
+    <OutputPath>/rimworld/1.5/Mods/ED-LaserDrill/1.5/Assemblies</OutputPath>
+    <MainPath>/rimworld/1.2/Mods/ED-LaserDrill/1.5/Assemblies</MainPath>
+  </PropertyGroup>
 
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.2|AnyCPU' ">
     <Reference Include="Assembly-CSharp, Version=1.2.7528.19748, Culture=neutral, PublicKeyToken=null">
@@ -100,6 +105,28 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release v1.5|AnyCPU' ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>/rimworld/1.5/RimWorldLinux_Data/Managed/Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>/rimworld/1.5/RimWorldLinux_Data/Managed/UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>/rimworld/1.5/RimWorldLinux_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Comps/CompProperties_LaserDrill.cs" />
@@ -117,15 +144,16 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' != 'Windows_NT' ">
     <PropertyGroup>
-      <FilesSource>$(ProjectDir)..\..\ED-LaserDrill</FilesSource>
+      <FilesSource>$(ProjectDir)..\ED-LaserDrill</FilesSource>
       <FilesDestination>$(OutputPath)..</FilesDestination>
     </PropertyGroup>
     <Exec Command="cp -rvf $(FilesSource)/* '$(FilesDestination)/../'" />
-    <Exec Command="cp '$(FilesSource)/README.md' '$(FilesDestination)/../'" />
+    <Exec Command="cp '$(FilesSource)/../README.md' '$(FilesDestination)/../'" />
     <Exec Command="mkdir -p '$(MainPath)'" />
     <Exec Command="cp -vf $(OutputPath)* '$(MainPath)/'" />
     <Exec Command="unix2dos '$(FilesDestination)/../README.md'" />
     <!--
+      cp '/code/Rimworld/ED-LaserDrill/Source/../../ED-LaserDrill/../README.md' '/rimworld/1.5/Mods/ED-LaserDrill/1.5/Assemblies/../../'" exited with code 1.
     <Error Condition=" '$(FilesDestination)' == '' " Text="Lib not delivered. To disable this message, remove the 'Target' tag from the project file" />
     <Exec Command="RD /S /Q &quot;$(FilesDestination)&quot;" />
     <Exec Command="XCOPY &quot;$(FilesSource)&quot; &quot;$(FilesDestination)&quot; /E /I /H /R /K /Y" />

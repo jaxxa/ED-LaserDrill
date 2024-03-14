@@ -337,6 +337,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         private void ShowLaserVisually(IntVec3 position)
         {
             LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), position, parent.Map, WipeMode.Vanish);
+            _LaserDrillVisual.LaserDrill = this.parent;
         }
 
         private bool IsScanComplete()
