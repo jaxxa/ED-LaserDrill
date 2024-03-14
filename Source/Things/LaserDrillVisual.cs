@@ -52,7 +52,11 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Things
             this.GetComp<CompAffectsSky>().StartFadeInHoldFadeOut(30, this.Duration - 30 - 15, 15, 1f);
             this.GetComp<CompOrbitalBeam>().StartAnimation(this.Duration, 10, this.Angle);
 
-            MoteMaker.MakeBombardmentMote(this.Position, this.Map);
+            #if RIMWORLD12
+            MoteMaker.MakeBombardmentMote_NewTmp(this.Position, this.Map, 1f);
+            #else
+            MoteMaker.MakeBombardmentMote(this.Position, this.Map, 1f);
+            #endif
             MoteMaker.MakePowerBeamMote(this.Position, this.Map);
         }
 

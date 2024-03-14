@@ -50,6 +50,9 @@ Aditional details can be fount in About.xml
  * Update to 1.2
  * Lasers now can be targeting anywhere on the map.
 
+2.2.0.0
+ * Updated to Rimworld v1.3.
+ * Updated to Rimworld v1.4.
 
 
 
