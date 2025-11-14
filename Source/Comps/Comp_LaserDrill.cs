@@ -287,7 +287,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
 
                     this.m_RequiresShipResourcesComp.UseResources();
                     Messages.Message("SteamGeyser Removed.", MessageTypeDefOf.TaskCompletion);
-                    this.parent.Destroy(DestroyMode.Vanish);
+                    this.parent.Destroy(DestroyMode.Deconstruct);
                 }
                 else
                 {
@@ -337,6 +337,7 @@ namespace Jaxxa.EnhancedDevelopment.LaserDrill.Comps
         private void ShowLaserVisually(IntVec3 position)
         {
             LaserDrillVisual _LaserDrillVisual = (LaserDrillVisual)GenSpawn.Spawn(ThingDef.Named("LaserDrillVisual"), position, parent.Map, WipeMode.Vanish);
+            _LaserDrillVisual.LaserDrill = this.parent;
         }
 
         private bool IsScanComplete()

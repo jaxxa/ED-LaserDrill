@@ -1,3 +1,5 @@
+This project has been retired, in favor of the excellent [**ED-LaserDrill (Continued) mod**](https://steamcommunity.com/sharedfiles/filedetails/?id=2570228927).
+
 # ED-LaserDrill
 This is the Readme for the Enhanced Devemopment Mod, ED-LaserDrill, for the Game Rimworld.
 
@@ -50,6 +52,13 @@ Aditional details can be fount in About.xml
  * Update to 1.2
  * Lasers now can be targeting anywhere on the map.
 
+---- HopeSeekr forked the project ----
 
+**v2.2.0: 2023-03-13**
+ * Updated to Rimworld v1.3.
+ * Updated to Rimworld v1.4.
 
+**v2.3.0: 2023-03-14**
+ * Updated to Rimworld v1.5.
+ * LaserDrills now drop partial resources when destroyed on use.
 
