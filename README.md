@@ -56,3 +56,5 @@ Aditional details can be fount in About.xml
  * Removing Dependency on ED-Core
  * Removing restriction for multiple Drills
 
+2025-12-24
+ * Updating to 1.6 and depreciating other versions.
