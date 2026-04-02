@@ -5,7 +5,7 @@
 
 	<ThingDef ParentName="BuildingBase">
 		<defName>LaserDrill</defName>
-		<label>Laser Drill Tageting</label>
+		<label>Laser Drill Targeting</label>
 		<thingClass>Building</thingClass>
 		<graphicData>
 			<texPath>Things/Buildings/LaserDrill</texPath>
