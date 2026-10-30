@@ -58,3 +58,9 @@ Aditional details can be fount in About.xml
 
 2025-12-24
  * Updating to 1.6 and depreciating other versions.
+ 
+2025-12-24
+ * Updating to 1.6 and depreciating other versions.
+ 
+2026-10-30
+ * Updating to 1.7

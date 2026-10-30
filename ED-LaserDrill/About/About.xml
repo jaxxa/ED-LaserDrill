@@ -3,11 +3,11 @@
 	<name>ED-Laser-Drill</name>
 	<packageId>Jaxxa.EnhancedDevelopment.LaserDrill</packageId>
 	<supportedVersions>
-		<li>1.6</li>
+		<li>1.7</li>
 	</supportedVersions>
 	<author>Jaxxa</author>
 	<url>https://github.com/jaxxa/ED-LaserDrill</url>
-	<description>Version: 2025-12-24
+	<description>Version: 2026-10-30
 
 Adds a Drilling Laser Targeting system that allows the creation or removal of steam vents. After research and construction, you will power the building while it conducts a subsurface scan. After the scan is complete, it can use a large amount of stored battery power to activate the laser of an orbiting satellite to drill or collapse a steam vent.
 	</description>
